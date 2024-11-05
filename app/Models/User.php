@@ -48,12 +48,4 @@ class User extends Authenticatable
         'type' => UserType::class,
         'career' => Career::class,
     ];
-
-    public function assignedSubjects()
-    {
-        return $this->hasMany(Subject::class);
-    }
-
-
-
 }

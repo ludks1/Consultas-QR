@@ -12,6 +12,7 @@ class Institution extends Model
     protected $fillable = [
         'name',
         'address',
+        'logo',
     ];
 
     public function buildings()
