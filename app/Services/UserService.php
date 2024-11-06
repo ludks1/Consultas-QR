@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Event;
-use App\Models\Schedule;
-use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -14,7 +11,6 @@ use App\Enums\UserType;
 
 class UserService
 {
-    // User CRUD
     public function createUser(array $data): User
     {
         if ($data['type'] !== UserType::ADMIN) {
