@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Schedule extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $schedules = Schedule::all();
+        $schedules = ScheduleController::all();
         return response()->json($schedules);
     }
 
@@ -30,7 +30,7 @@ class Schedule extends Controller
             'endIime' => 'required|string',
         ]);
 
-        $schedule = Schedule::create([
+        $schedule = ScheduleController::create([
             'institutionId' => $request->institutionId,
             'buildingId' => $request->buildingId,
             'spaceId' => $request->spaceId,
@@ -48,7 +48,7 @@ class Schedule extends Controller
      */
     public function show(string $id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = ScheduleController::findOrFail($id);
         return response()->json($schedule);
     }
 
@@ -57,7 +57,7 @@ class Schedule extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = ScheduleController::findOrFail($id);
 
         $request->validate([
             'institutionId' => 'required|integer',
@@ -87,7 +87,7 @@ class Schedule extends Controller
      */
     public function destroy(string $id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = ScheduleController::findOrFail($id);
         $schedule->delete();
 
         return response()->json(null, 204);

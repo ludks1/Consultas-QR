@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Space extends Controller
+class SpaceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $spaces = Space::all();
+        $spaces = SpaceController::all();
         return response()->json($spaces);
     }
 
@@ -30,7 +30,7 @@ class Space extends Controller
             'qrCode' => 'required|string|unique:spaces',
         ]);
 
-        $space = Space::create([
+        $space = SpaceController::create([
             'institution_id' => $request->institution_id,
             'building_id' => $request->building_id,
             'floor' => $request->floor,
@@ -48,7 +48,7 @@ class Space extends Controller
      */
     public function show(string $id)
     {
-        $space = Space::findOrFail($id);
+        $space = SpaceController::findOrFail($id);
         return response()->json($space);
     }
 
@@ -57,7 +57,7 @@ class Space extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $space = Space::findOrFail($id);
+        $space = SpaceController::findOrFail($id);
 
         $request->validate([
             'institution_id' => 'required|integer',
@@ -87,7 +87,7 @@ class Space extends Controller
      */
     public function destroy(string $id)
     {
-        $space = Space::findOrFail($id);
+        $space = SpaceController::findOrFail($id);
         $space->delete();
 
         return response()->json(null, 204);

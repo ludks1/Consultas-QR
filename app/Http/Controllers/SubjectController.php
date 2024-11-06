@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Subject extends Controller
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subjects = Subject::all();
+        $subjects = SubjectController::all();
         return response()->json($subjects);
     }
 
@@ -27,7 +27,7 @@ class Subject extends Controller
             'career' => 'required|string',
         ]);
 
-        $subject = Subject::create([
+        $subject = SubjectController::create([
             'name' => $request->name,
             'code' => $request->code,
             'description' => $request->description,
@@ -42,7 +42,7 @@ class Subject extends Controller
      */
     public function show(string $id)
     {
-        $subject = Subject::findOrFail($id);
+        $subject = SubjectController::findOrFail($id);
         return response()->json($subject);
     }
 
@@ -51,7 +51,7 @@ class Subject extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $subject = Subject::findOrFail($id);
+        $subject = SubjectController::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string',
@@ -75,7 +75,7 @@ class Subject extends Controller
      */
     public function destroy(string $id)
     {
-        $subject = Subject::findOrFail($id);
+        $subject = SubjectController::findOrFail($id);
         $subject->delete();
 
         return response()->json(null, 204);

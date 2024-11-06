@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Building extends Controller
+class BuildingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $buildings = Building::all();
+        $buildings = BuildingController::all();
         return response()->json($buildings);
     }
 
@@ -26,7 +26,7 @@ class Building extends Controller
             'address' => 'optional|string',
         ]);
 
-        $building = Building::create([
+        $building = BuildingController::create([
             'institutionId' => $request->institutionId,
             'name' => $request->name,
             'address' => $request->address,
@@ -40,7 +40,7 @@ class Building extends Controller
      */
     public function show(string $id)
     {
-        $building = Building::findOrFail($id);
+        $building = BuildingController::findOrFail($id);
         return response()->json($building);
     }
 
@@ -49,14 +49,14 @@ class Building extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $building = Building::findOrFail($id);
+        $building = BuildingController::findOrFail($id);
         $request->validate([
             'institutionId' => 'required|integer',
             'name' => 'required|string',
             'address' => 'optional|string',
         ]);
 
-        $building = Building::create([
+        $building = BuildingController::create([
             'institutionId' => $request->institutionId,
             'name' => $request->name,
             'address' => $request->address,
@@ -70,7 +70,7 @@ class Building extends Controller
      */
     public function destroy(string $id)
     {
-        $building = Building::findOrFail($id);
+        $building = BuildingController::findOrFail($id);
         $building->delete();
 
         return response()->json(null, 204);

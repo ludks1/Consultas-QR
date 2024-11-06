@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class User extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
+        $users = UserController::all();
         return response()->json($users);
     }
 
@@ -29,7 +29,7 @@ class User extends Controller
             'career' => 'required|string',
         ]);
 
-        $user = User::create([
+        $user = UserController::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -46,7 +46,7 @@ class User extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = UserController::findOrFail($id);
         return response()->json($user);
     }
 
@@ -55,7 +55,7 @@ class User extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::findOrFail($id);
+        $user = UserController::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string',
@@ -79,7 +79,7 @@ class User extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = UserController::findOrFail($id);
         $user->delete();
 
         return response()->json(null, 204);
