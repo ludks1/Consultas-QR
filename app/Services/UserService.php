@@ -79,7 +79,7 @@ class UserService
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para ver los usuarios.']);
         }
     }
-    public function validate(array $data): void
+    private function validate(array $data): void
     {
         if (User::where('email', $data['email'])->exists()) {
             throw ValidationException::withMessages(['email' => 'El correo electrónico ya está en uso.']);
