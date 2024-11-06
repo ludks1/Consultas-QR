@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('name')->nullable(false);
-            $table->integer('code')->autoIncrement();
+            $table->integer('code');
             $table->text('description')->nullable();
-            $table->string('career', [
+            $table->enum('career', [
                     Career::ISW->value, Career::IPI->value, Career::ITC->value
                 ]
             )->default(Career::ISW->value);

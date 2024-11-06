@@ -18,12 +18,12 @@ return new class extends Migration {
             $table->string('accountId')->unique();
             $table->string('email')->unique();
             $table->timestamp('emailVerifiedAt')->nullable();
-            $table->string('type', [
-                    UserType::STUDENT->value, UserType::TEACHER->value
+            $table->enum('type', [
+                    UserType::STUDENT->value, UserType::TEACHER->value, UserType::ADMIN->value
                 ]
             )->default(UserType::STUDENT->value);
             $table->string('password')->always();
-            $table->string('career', [
+            $table->enum('career', [
                     Career::ISW->value, Career::IPI->value, Career::ITC->value
                 ]
             )->default(Career::ISW->value);

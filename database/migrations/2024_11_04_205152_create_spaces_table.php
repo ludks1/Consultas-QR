@@ -17,13 +17,23 @@ return new class extends Migration {
             $table->integer('floor')->default(1);
             $table->string('name')->nullable(false);
             $table->string('addressDescription')->nullable();
-            $table->string('type', [
-                SpaceType::COURT, SpaceType::AUDITORIUM, SpaceType::CAFETERIA, SpaceType::CLASSROOM,
-                    SpaceType::LIBRARY, SpaceType::LABORATORY, SpaceType::OFFICE, SpaceType::PARKING_LOT,
-                    SpaceType::PRINCIPAL_ROOM, SpaceType::VICE_PRINCIPAL_ROOM, SpaceType::SERVER_ROOM,
-                    SpaceType::RESTROOM, SpaceType::NURSE_ROOM, SpaceType::SECURITY_ROOM
+            $table->enum('type', [
+                    SpaceType::COURT->value,
+                    SpaceType::AUDITORIUM->value,
+                    SpaceType::CAFETERIA->value,
+                    SpaceType::CLASSROOM->value,
+                    SpaceType::LIBRARY->value,
+                    SpaceType::LABORATORY->value,
+                    SpaceType::OFFICE->value,
+                    SpaceType::PARKING_LOT->value,
+                    SpaceType::PRINCIPAL_ROOM->value,
+                    SpaceType::VICE_PRINCIPAL_ROOM->value,
+                    SpaceType::SERVER_ROOM->value,
+                    SpaceType::RESTROOM->value,
+                    SpaceType::NURSE_ROOM->value,
+                    SpaceType::SECURITY_ROOM->value
                 ]
-            )->nullable(false);
+            )->default(SpaceType::CLASSROOM->value);
             $table->integer('qrCode')->nullable(false);
             $table->integer('capacity')->default(1);
             $table->timestamps();
