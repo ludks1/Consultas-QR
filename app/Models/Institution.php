@@ -13,14 +13,12 @@ class Institution extends Model
         'name',
         'address',
         'logo',
+        'phone',
+        'email',
     ];
 
     public function buildings()
     {
         return $this->hasMany(Building::class);
-    }
-    public function spaces()
-    {
-        return $this->hasManyThrough(Space::class, Building::class);
     }
 }

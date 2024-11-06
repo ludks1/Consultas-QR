@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('type')->default('student');
             $table->string('name')->always();
             $table->string('accountId')->unique();
             $table->string('email')->unique();
             $table->timestamp('emailVerifiedAt')->nullable();
+            $table->string('type')->default('student');
             $table->string('password')->always();
             $table->string('career')->default('ISW');
             $table->rememberToken();

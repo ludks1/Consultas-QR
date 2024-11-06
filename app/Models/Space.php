@@ -11,17 +11,17 @@ class Space extends Model
     use HasFactory;
 
     protected $fillable = [
-        'institution_id',
-        'building_id',
+        'buildingId',
         'floor',
         'name',
         'addressDescription',
-        'category',
+        'type',
         'qrCode',
+        'capacity',
     ];
 
     protected $casts = [
-        'category' => SpaceType::class,
+        'type' => SpaceType::class,
     ];
 
     public function building()

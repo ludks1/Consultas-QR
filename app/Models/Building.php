@@ -13,10 +13,16 @@ class Building extends Model
         'institutionId',
         'name',
         'address',
+        'numberOfFloors',
     ];
 
     public function spaces()
     {
         return $this->hasMany(Space::class);
+    }
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
     }
 }

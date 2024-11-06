@@ -10,8 +10,6 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'institutionId',
-        'buildingId',
         'spaceId',
         'subjectId',
         'day',
@@ -22,5 +20,10 @@ class Schedule extends Model
     public function space()
     {
         return $this->belongsTo(Space::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

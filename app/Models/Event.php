@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SpaceType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +11,6 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'institutionId',
-        'buildingId',
         'spaceId',
         'name',
         'description',
@@ -19,6 +18,11 @@ class Event extends Model
         'endDate',
         'startTime',
         'endTime',
+        'type,'
+    ];
+
+    protected $casts = [
+        'type' => SpaceType::class,
     ];
 
     public function space()

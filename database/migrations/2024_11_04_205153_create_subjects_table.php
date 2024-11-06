@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subjects', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('code');
-            $table->string('career');
+            $table->id()->autoIncrement();
+            $table->string('name')->nullable(false);
+            $table->integer('code')->autoIncrement();
             $table->text('description')->nullable();
+            $table->string('career')->default('ISW');
+            $table->integer('semester')->default(1);
             $table->timestamps();
         });
     }

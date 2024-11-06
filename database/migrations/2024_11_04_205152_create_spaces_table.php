@@ -11,14 +11,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('spaces', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('institutionId')->constrained('institutions')->onDelete('cascade');
+            $table->id()->autoIncrement();
             $table->foreignId('buildingId')->constrained('buildings')->onDelete('cascade');
-            $table->integer('floor');
-            $table->string('name');
+            $table->integer('floor')->default(1);
+            $table->string('name')->nullable(false);
             $table->string('addressDescription')->nullable();
-            $table->string('category');
-            $table->string('qrCode');
+            $table->string('type')->nullable(false);
+            $table->integer('qrCode')->nullable(false);
+            $table->integer('capacity')->default(1);
             $table->timestamps();
         });
     }

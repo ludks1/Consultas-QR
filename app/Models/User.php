@@ -48,4 +48,10 @@ class User extends Authenticatable
         'type' => UserType::class,
         'career' => Career::class,
     ];
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'user_subject');
+    }
+
 }
