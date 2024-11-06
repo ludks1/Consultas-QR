@@ -25,20 +25,26 @@ class SpaceService
     public function createSpace(array $data): Space
     {
         return Space::create([
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'capacity' => $data['capacity'],
-            'buildingId' => $data['buildingId'],
+            'buildingId'=> $data['buildingId'],
+            'floor'=> $data['floor'],
+            'name'=> $data['name'],
+            'addressDescription'=> $data['addressDescription'],
+            'type'=> $data['type'],
+            'qrCode'=> $data['qrCode'],
+            'capacity'=> $data['capacity'],
         ]);
     }
 
     public function updateSpace(Space $space, array $data): Space
     {
         $space->update([
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'capacity' => $data['capacity'],
-            'buildingId' => $data['buildingId'],
+            'buildingId'=> $data['buildingId'],
+            'floor'=> $data['floor'],
+            'name'=> $data['name'],
+            'addressDescription'=> $data['addressDescription'],
+            'type'=> $data['type'],
+            'qrCode'=> $data['qrCode'],
+            'capacity'=> $data['capacity'],
         ]);
         return $space;
     }
