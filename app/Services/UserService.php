@@ -11,11 +11,12 @@ use App\Enums\UserType;
 
 class UserService
 {
+    /**
+     * @throws ValidationException
+     */
     public function createUser(array $data): User
     {
-        if ($data['type'] !== UserType::ADMIN) {
-            throw ValidationException::withMessages(['type' => 'Ya existe un administrador.']);
-        } elseif (User::where('type', UserType::ADMIN)->exists()) {
+        if ($data['type'] !== UserType::ADMIN && User::where('type', UserType::ADMIN)->exists()) {
             throw ValidationException::withMessages(['type' => 'Ya existe un administrador.']);
         }
         $this->validate($data);
@@ -29,6 +30,9 @@ class UserService
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function updateUser(User $user, array $data): User
     {
         $this->validate($data);
@@ -53,6 +57,9 @@ class UserService
         }
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function deleteUser(User $user): void
     {
         if ($user['type'] === UserType::ADMIN) {
@@ -67,6 +74,9 @@ class UserService
         return User::findOrFail($id);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function getUsers(User $user): Collection
     {
         if ($user['type'] === UserType::ADMIN) {
@@ -75,6 +85,10 @@ class UserService
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para ver los usuarios.']);
         }
     }
+
+    /**
+     * @throws ValidationException
+     */
     private function validate(array $data): void
     {
         if (User::where('email', $data['email'])->exists()) {
