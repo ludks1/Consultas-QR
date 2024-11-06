@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name');
-            $table->string('address');
-            $table->string('logo');
-            $table->integer('phone');
-            $table->string('email');
+            $table->string('name')->nullable(false);
+            $table->string('address')->nullable(false);
+            $table->string('logo')->nullable();
+            $table->integer('phone')->nullable(false);
+            $table->string('email')->nullable(false);
             $table->timestamps();
         });
     }

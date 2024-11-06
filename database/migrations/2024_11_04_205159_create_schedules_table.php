@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('spaceId')->constrained('spaces')->onDelete('cascade');
             $table->foreignId('subjectId')->constrained('subjects')->onDelete('cascade');
-            $table->date('day');
-            $table->time('startIime');
-            $table->time('endIime');
+            $table->date('day')->default('2024-11-04');
+            $table->time('startIime')->default('07:00:00');
+            $table->time('endIime')->default('20:00:00');
             $table->timestamps();
         });
     }

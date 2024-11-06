@@ -1,11 +1,12 @@
 <?php
 
+use App\Enums\UserType;
+use App\Enums\Career;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,9 +18,15 @@ return new class extends Migration
             $table->string('accountId')->unique();
             $table->string('email')->unique();
             $table->timestamp('emailVerifiedAt')->nullable();
-            $table->string('type')->default('student');
+            $table->string('type', [
+                    UserType::STUDENT->value, UserType::TEACHER->value
+                ]
+            )->default(UserType::STUDENT->value);
             $table->string('password')->always();
-            $table->string('career')->default('ISW');
+            $table->string('career', [
+                    Career::ISW->value, Career::IPI->value, Career::ITC->value
+                ]
+            )->default(Career::ISW->value);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -17,6 +17,5 @@ enum SpaceType: string
     case NURSE_ROOM = 'nurse_room';
     case PRINCIPAL_ROOM = 'principal_room';
     case VICE_PRINCIPAL_ROOM = 'vice_principal_room';
-    case LAB_ROOM = 'lab_room';
     case COURT = 'court';
 }

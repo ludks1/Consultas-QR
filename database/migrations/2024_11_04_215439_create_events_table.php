@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('spaceId')->constrained('spaces');
-            $table->string('name');
-            $table->string('description');
-            $table->date('startDate');
-            $table->date('endDate');
-            $table->time('startTime');
-            $table->time('endTime');
+            $table->string('name')->nullable(false);
+            $table->string('description')->nullable();
+            $table->date('startDate')->default('2024-11-04');
+            $table->date('endDate')->default('2024-11-04');
+            $table->time('startTime')->default('07:00:00');
+            $table->time('endTime')->default('20:00:00');
             $table->timestamps();
         });
     }
