@@ -34,7 +34,7 @@ return new class extends Migration {
                     SpaceType::SECURITY_ROOM->value
                 ]
             )->default(SpaceType::CLASSROOM->value);
-            $table->integer('qrCode')->nullable(false);
+            $table->text('qrCode')->nullable(false);
             $table->integer('capacity')->default(1);
             $table->timestamps();
         });
