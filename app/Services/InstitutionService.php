@@ -22,6 +22,7 @@ class InstitutionService
         return Institution::create([
             'name' => $data['name'],
             'address' => $data['address'],
+            'logo' => $data['logo'],
             'phone' => $data['phone'],
             'email' => $data['email'],
         ]);
@@ -32,6 +33,7 @@ class InstitutionService
         $institution->update([
             'name' => $data['name'],
             'address' => $data['address'],
+            'logo' => $data['logo'],
             'phone' => $data['phone'],
             'email' => $data['email'],
         ]);

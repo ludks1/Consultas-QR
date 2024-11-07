@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class SubjectService
 {
-    public function addSubject(User $user, Subject $subject): Subject
+    public function addSubject(User $user, Subject $subject, array $data): Subject
     {
         if ($user->subjects()->where('id', $subject)->exists()) {
             throw ValidationException::withMessages(['subjectId' => 'La materia ya está asignada.']);
@@ -19,11 +19,27 @@ class SubjectService
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear una materia.']);
         }
         return $subject->create([
-            'name' => $subject['name'],
-            'code' => $subject['code'],
-            'description' => $subject['description'],
-            'career' => $subject['career'],
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'description' => $data['description'],
+            'career' => $data['career'],
+            'semester' => $data['semester'],
         ]);
+    }
+
+    public function updateSubject(User$user, Subject $subject, array $data): Subject
+    {
+        if ($user['type'] !== UserType::ADMIN) {
+            throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear una materia.']);
+        }
+        $subject->update([
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'description' => $data['description'],
+            'career' => $data['career'],
+            'semester' => $data['semester'],
+        ]);
+        return $subject;
     }
 
     public function deleteSubject(User $user, Subject $subject): void

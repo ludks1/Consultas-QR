@@ -16,15 +16,13 @@ class EventService
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear un evento.']);
         }
         return Event::create([
-            'institutionId' => $event['institutionId'],
-            'buildingId' => $event['buildingId'],
             'spaceId' => $event['spaceId'],
             'name' => $event['name'],
             'description' => $event['description'],
             'startDate' => $event['startDate'],
-            'endDate' => $event['endDate'],
             'startTime' => $event['startTime'],
-            'endTime' => $event['endTime'],
+            'endDate' => $event['endDate'],
+            'type' => $event['type'],
         ]);
     }
 
