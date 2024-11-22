@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -11,7 +12,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = EventController::all();
+        $event = Event::all();
         return response()->json($event);
     }
 
@@ -32,7 +33,7 @@ class EventController extends Controller
             'endTime' => 'required|time',
         ]);
 
-        $event = EventController::create([
+        $event = Event::create([
             'institutionId' => $request->institutionId,
             'buildingId' => $request->buildingId,
             'spaceId' => $request->spaceId,
@@ -52,7 +53,7 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event = EventController::findOrFail($id);
+        $event = Event::findOrFail($id);
         return response()->json($event);
     }
 
@@ -61,7 +62,7 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $event = EventController::findOrFail($id);
+        $event = Event::findOrFail($id);
 
         $request->validate([
             'institutionId' => 'required|integer',
@@ -93,7 +94,7 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        $event = EventController::findOrFail($id);
+        $event = Event::findOrFail($id);
         $event->delete();
 
         return response()->json(null, 204);

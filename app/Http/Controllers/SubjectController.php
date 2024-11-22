@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -11,7 +12,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = SubjectController::all();
+        $subjects = Subject::all();
         return response()->json($subjects);
     }
 
@@ -27,7 +28,7 @@ class SubjectController extends Controller
             'career' => 'required|string',
         ]);
 
-        $subject = SubjectController::create([
+        $subject = Subject::create([
             'name' => $request->name,
             'code' => $request->code,
             'description' => $request->description,
@@ -42,7 +43,7 @@ class SubjectController extends Controller
      */
     public function show(string $id)
     {
-        $subject = SubjectController::findOrFail($id);
+        $subject = Subject::findOrFail($id);
         return response()->json($subject);
     }
 
@@ -51,7 +52,7 @@ class SubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $subject = SubjectController::findOrFail($id);
+        $subject = Subject::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string',
@@ -75,7 +76,7 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        $subject = SubjectController::findOrFail($id);
+        $subject = Subject::findOrFail($id);
         $subject->delete();
 
         return response()->json(null, 204);

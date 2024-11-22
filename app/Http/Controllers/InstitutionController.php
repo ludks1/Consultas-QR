@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institution;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
@@ -11,7 +12,7 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        $institutions = InstitutionController::all();
+        $institutions = Institution::all();
         return response()->json($institutions);
     }
 
@@ -26,7 +27,7 @@ class InstitutionController extends Controller
             'logo' => 'required|string',
         ]);
 
-        $institution = InstitutionController::create([
+        $institution = Institution::create([
             'name' => $request->name,
             'address' => $request->address,
             'logo' => $request->logo,
@@ -40,7 +41,7 @@ class InstitutionController extends Controller
      */
     public function show(string $id)
     {
-        $institution = InstitutionController::findOrFail($id);
+        $institution = Institution::findOrFail($id);
         return response()->json($institution);
     }
 
@@ -49,7 +50,7 @@ class InstitutionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $institution = InstitutionController::findOrFail($id);
+        $institution = Institution::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|unique:institutions,name,' . $institution->id,
@@ -71,7 +72,7 @@ class InstitutionController extends Controller
      */
     public function destroy(string $id)
     {
-        $institution = InstitutionController::findOrFail($id);
+        $institution = Institution::findOrFail($id);
         $institution->delete();
 
         return response()->json(null, 204);

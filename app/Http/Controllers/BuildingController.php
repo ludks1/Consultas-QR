@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use Illuminate\Http\Request;
 
 class BuildingController extends Controller
@@ -11,7 +12,7 @@ class BuildingController extends Controller
      */
     public function index()
     {
-        $buildings = BuildingController::all();
+        $buildings = Building::all();
         return response()->json($buildings);
     }
 
@@ -26,7 +27,7 @@ class BuildingController extends Controller
             'address' => 'optional|string',
         ]);
 
-        $building = BuildingController::create([
+        $building = Building::create([
             'institutionId' => $request->institutionId,
             'name' => $request->name,
             'address' => $request->address,
@@ -40,7 +41,7 @@ class BuildingController extends Controller
      */
     public function show(string $id)
     {
-        $building = BuildingController::findOrFail($id);
+        $building = Building::findOrFail($id);
         return response()->json($building);
     }
 
@@ -49,14 +50,14 @@ class BuildingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $building = BuildingController::findOrFail($id);
+        $building = Building::findOrFail($id);
         $request->validate([
             'institutionId' => 'required|integer',
             'name' => 'required|string',
             'address' => 'optional|string',
         ]);
 
-        $building = BuildingController::create([
+        $building = Building::create([
             'institutionId' => $request->institutionId,
             'name' => $request->name,
             'address' => $request->address,
@@ -70,7 +71,7 @@ class BuildingController extends Controller
      */
     public function destroy(string $id)
     {
-        $building = BuildingController::findOrFail($id);
+        $building = Building::findOrFail($id);
         $building->delete();
 
         return response()->json(null, 204);

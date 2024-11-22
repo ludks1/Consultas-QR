@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Space;
 use Illuminate\Http\Request;
 
 class SpaceController extends Controller
@@ -11,7 +12,7 @@ class SpaceController extends Controller
      */
     public function index()
     {
-        $spaces = SpaceController::all();
+        $spaces = Space::all();
         return response()->json($spaces);
     }
 
@@ -30,7 +31,7 @@ class SpaceController extends Controller
             'qrCode' => 'required|string|unique:spaces',
         ]);
 
-        $space = SpaceController::create([
+        $space = Space::create([
             'institution_id' => $request->institution_id,
             'building_id' => $request->building_id,
             'floor' => $request->floor,
@@ -48,7 +49,7 @@ class SpaceController extends Controller
      */
     public function show(string $id)
     {
-        $space = SpaceController::findOrFail($id);
+        $space = Space::findOrFail($id);
         return response()->json($space);
     }
 
@@ -57,7 +58,7 @@ class SpaceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $space = SpaceController::findOrFail($id);
+        $space = Space::findOrFail($id);
 
         $request->validate([
             'institution_id' => 'required|integer',
@@ -87,7 +88,7 @@ class SpaceController extends Controller
      */
     public function destroy(string $id)
     {
-        $space = SpaceController::findOrFail($id);
+        $space = Space::findOrFail($id);
         $space->delete();
 
         return response()->json(null, 204);
