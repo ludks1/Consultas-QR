@@ -13,18 +13,26 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('name')->always();
+            $table->id();
+            $table->string('name')->nullable();
             $table->string('accountId')->unique();
             $table->string('email')->unique();
             $table->timestamp('emailVerifiedAt')->nullable();
-            $table->enum('type', [
-                    UserType::STUDENT->value, UserType::TEACHER->value, UserType::ADMIN->value
+            $table->enum(
+                'type',
+                [
+                    UserType::STUDENT->value,
+                    UserType::TEACHER->value,
+                    UserType::ADMIN->value
                 ]
             )->default(UserType::STUDENT->value);
-            $table->string('password')->always();
-            $table->enum('career', [
-                    Career::ISW->value, Career::IPI->value, Career::ITC->value
+            $table->string('password')->nullable();
+            $table->enum(
+                'career',
+                [
+                    Career::ISW->value,
+                    Career::IPI->value,
+                    Career::ITC->value
                 ]
             )->default(Career::ISW->value);
             $table->rememberToken();

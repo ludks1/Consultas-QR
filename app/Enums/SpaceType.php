@@ -18,4 +18,9 @@ enum SpaceType: string
     case PRINCIPAL_ROOM = 'principal_room';
     case VICE_PRINCIPAL_ROOM = 'vice_principal_room';
     case COURT = 'court';
+
+    public static function getOptions(): array
+    {
+        return array_map(fn($space) => $space->value, self::cases());
+    }
 }

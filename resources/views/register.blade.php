@@ -20,8 +20,34 @@
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="card p-4 shadow" style="width: 400px;">
             <h3 class="text-center mb-4">Registrarse</h3>
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('users.store') }}" method="POST">
                 @csrf
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="name" class="form-control" id="name" name="name"
+                        placeholder="Ingrese su nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountId">Numero de Cuenta</label>
+                    <input type="accountId" class="form-control" id="accountId" name="accountId"
+                        placeholder="Ingrese su numero de cuenta" required>
+                </div>
+                <div class="form-group">
+                    <label for="user_type">Tipo de Usuario</label>
+                    <select name="user_type" id="user_type" class="form-control">
+                        @foreach ($userTypes as $type)
+                            <option value="{{ $type }}">{{ $type }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="user_career">Carrera</label>
+                    <select name="user_career" id="user_career" class="form-control">
+                        @foreach ($userCareers as $career)
+                            <option value="{{ $career }}">{{ $career }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="email">Correo Electrónico</label>
                     <input type="email" class="form-control" id="email" name="email"

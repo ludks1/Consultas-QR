@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Career;
+use App\Enums\UserType;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->userService->getUsers();
         return response()->json($users);
     }
 
@@ -23,23 +32,21 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string',
-            'type' => 'required|string',
-            'accountId' => 'required|integer',
-            'career' => 'required|string',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'user_type' => 'required|string',
+            'accountId' => 'required|string|unique:users,accountId',
+            'user_career' => 'required|string',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'type' => $request->type,
-            'accountId' => $request->accountId,
-            'career' => $request->career,
-        ]);
+        $data = $request->all();
+        $data['type'] = $data['user_type'];  // Mapeamos 'user_type' a 'type'
+        $data['career'] = $data['user_career'];  // Mapeamos 'user_career' a 'career'
 
-        return response()->json($user, 201);
+        // Llamar al servicio para crear el usuario
+        $this->userService->createUser($data);
+        // Devolver la respuesta
+        return redirect()->route('login')->with('success', 'Usuario creado exitosamente');
     }
 
     /**
@@ -84,5 +91,12 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function showRegisterForm()
+    {
+        $userTypes = UserType::getAllowedOptions();
+        $userCareers = Career::getOptions();
+        return view('register', compact('userTypes', 'userCareers'));
     }
 }

@@ -8,4 +8,12 @@ enum UserType: string
     case STUDENT = 'student';
     case TEACHER = 'teacher';
 
+    public static function getAllowedOptions(): array
+    {
+        // Devuelve solo las opciones específicas
+        return [
+            self::TEACHER->value,
+            self::STUDENT->value,
+        ];
+    }
 }
