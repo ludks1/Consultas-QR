@@ -15,7 +15,20 @@
 
 <body>
     <!-- Navbar Start -->
-    @include('navbar')
+    @if (auth()->check())
+        @php
+            $type = auth()->user()->type;
+        @endphp
+        @if ($type == \App\Enums\UserType::ADMIN)
+            <!-- Navbar para Administradores -->
+            @include('adminnavbar')
+        @elseif ($type == \App\Enums\UserType::STUDENT || $type === \App\Enums\UserType::TEACHER)
+            <!-- Navbar para Usuarios -->
+            @include('usernavbar')
+        @endif
+    @else
+        @include('navbar')
+    @endif
     <!-- Navbar End -->
 
 

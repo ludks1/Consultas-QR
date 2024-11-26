@@ -15,34 +15,18 @@
 
 <body>
     <!-- Navbar Start -->
-    @if (auth()->check())
-        @php
-            $type = auth()->user()->type;
-        @endphp
-        @if ($type == \App\Enums\UserType::ADMIN)
-            <!-- Navbar para Administradores -->
-            @include('adminnavbar')
-        @elseif ($type == \App\Enums\UserType::STUDENT || $type === \App\Enums\UserType::TEACHER)
-            <!-- Navbar para Usuarios -->
-            @include('usernavbar')
-        @endif
-    @else
-        @include('navbar')
-    @endif
-    <!-- Navbar para Invitados -->
-
-
+    @if ()
+    @include('navbar')
     <!-- Navbar End -->
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
         <div class="row align-items-center px-3">
             <div class="col-lg-6 text-center text-lg-left">
-                <h4 class="text-white mb-4 mt-5 mt-lg-0">Sistema de horarios</h4>
+                <h4 class="text-white mb-4 mt-5 mt-lg-0">Sistema Administrador</h4>
                 <h1 class="display-3 font-weight-bold text-white">Una nueva forma para consultar tus materias</h1>
                 <p class="text-white mb-4">Este sistema promete mostrar a docentes y alumnos una forma mas comoda
-                    para consultar sus horarios escolares, asi como encontrar sus salones y edificios para atender
-                    sus
+                    para consultar sus horarios escolares, asi como encontrar sus salones y edificios para atender sus
                     actividades.</p>
                 <a href="{{ route('register') }}" class="btn btn-secondary mt-1 py-3 px-5">Registrarme</a>
             </div>

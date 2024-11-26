@@ -46,7 +46,7 @@ class UserController extends Controller
         // Llamar al servicio para crear el usuario
         $this->userService->createUser($data);
         // Devolver la respuesta
-        return redirect()->route('login')->with('success', 'Usuario creado exitosamente');
+        return redirect()->route('login');
     }
 
     /**

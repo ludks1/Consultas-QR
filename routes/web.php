@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+// rutas de horarios
+Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
 Route::get('/schedule', function () {
     return view('schedule');
 })->name('schedule');

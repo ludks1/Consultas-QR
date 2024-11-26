@@ -15,7 +15,20 @@
 
 <body>
     <!-- Navbar Start -->
-    @include('navbar')
+    @if (auth()->check())
+        @php
+            $type = auth()->user()->type;
+        @endphp
+        @if ($type == \App\Enums\UserType::ADMIN)
+            <!-- Navbar para Administradores -->
+            @include('adminnavbar')
+        @elseif ($type == \App\Enums\UserType::STUDENT || $type === \App\Enums\UserType::TEACHER)
+            <!-- Navbar para Usuarios -->
+            @include('usernavbar')
+        @endif
+    @else
+        @include('navbar')
+    @endif
     <!-- Navbar End -->
 
 
@@ -34,84 +47,54 @@
 
 
     <!-- Gallery Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <div class="container">
-            <div class="text-center pb-2">
-                <p class="section-title px-5"><span class="px-2">Tu Horario</span></p>
+    <form action="{{ route('schedule') }}" method="GET">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <label for="start_time">Hora de Inicio</label>
+                <input type="time" class="form-control" name="start_time" id="start_time"
+                    value="{{ request('start_time') }}">
             </div>
-            <div class="row">
-                <div class="col-12 text-center mb-2">
-                    <ul class="list-inline mb-4" id="portfolio-flters">
-                        <li class="btn btn-outline-primary m-1 active" data-filter="*">Hoy</li>
-                        <li class="btn btn-outline-primary m-1" data-filter=".first">Mañana</li>
-                        <li class="btn btn-outline-primary m-1" data-filter=".second">Semana</li>
-                    </ul>
-                </div>
+            <div class="col-md-3 mb-3">
+                <label for="end_time">Hora de Fin</label>
+                <input type="time" class="form-control" name="end_time" id="end_time"
+                    value="{{ request('end_time') }}">
             </div>
-            <div class="row portfolio-container">
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-1.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-1.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-2.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-2.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item third">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-3.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-3.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-4.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-4.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-5.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-5.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item third">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid w-100" src="img/portfolio-6.jpg" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="img/portfolio-6.jpg" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-3 mb-3">
+                <label for="date">Fecha</label>
+                <input type="date" class="form-control" name="date" id="date" value="{{ request('date') }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="subject">Materia</label>
+                <input type="text" class="form-control" name="subject" id="subject"
+                    value="{{ request('subject') }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="room">Salón</label>
+                <input type="text" class="form-control" name="room" id="room" value="{{ request('room') }}">
+            </div>
+            <div class="col-md-12 mb-3">
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </div>
         </div>
-    </div>
+    </form>
+
+    <!-- Resultados de la búsqueda -->
+    @if (isset($schedules) && count($schedules) > 0)
+        <div class="row">
+            @foreach ($schedules as $schedule)
+                <div class="col-md-6 col-lg-3 text-center mb-5">
+                    <div class="schedule-item">
+                        <h5>{{ $schedule->subject }}</h5>
+                        <p><strong>Hora:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}</p>
+                        <p><strong>Fecha:</strong> {{ $schedule->date }}</p>
+                        <p><strong>Salón:</strong> {{ $schedule->room }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p>No se encontraron horarios para la búsqueda.</p>
+    @endif
     <!-- Gallery End -->
 
 

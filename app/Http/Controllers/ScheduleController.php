@@ -10,10 +10,34 @@ class ScheduleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::all();
-        return response()->json($schedules);
+        $query = Schedule::query();
+
+        if ($request->filled('start_time')) {
+            $query->where('start_time', '>=', $request->start_time);
+        }
+
+        if ($request->filled('end_time')) {
+            $query->where('end_time', '<=', $request->end_time);
+        }
+
+        if ($request->filled('date')) {
+            $query->where('date', $request->date);
+        }
+
+        if ($request->filled('subject')) {
+            $query->where('subject', 'like', '%' . $request->subject . '%');
+        }
+
+        if ($request->filled('room')) {
+            $query->where('room', 'like', '%' . $request->room . '%');
+        }
+
+        // Obtener los horarios filtrados
+        $schedules = $query->get();
+
+        return view('schedule', compact('schedules'));
     }
 
     /**

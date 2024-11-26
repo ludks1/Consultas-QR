@@ -1933,7 +1933,7 @@ pre code {
 .table-info td,
 .table-info thead th,
 .table-info tbody+tbody {
-    border-color: #86cfda;
+    border-color: var(--secondary-color);
 }
 
 .table-hover .table-info:hover {
@@ -2698,16 +2698,16 @@ fieldset:disabled a.btn {
 .btn-primary:focus,
 .btn-primary.focus {
     color: #fff;
-    background-color: #138496;
-    border-color: #117a8b;
+    background-color: var(--secondary-color);
+    border-color: var(--third-color);
     box-shadow: 0 0 0 0.2rem rgba(58, 176, 195, 0.5);
 }
 
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8;
+    background-color: var(--secondary-color);
+    border-color: var(--third-color);
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -3012,14 +3012,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-    color: #17a2b8;
-    border-color: #17a2b8;
+    color: var(--secondary-color);
+    border-color: var(--fifth-color);
 }
 
 .btn-outline-primary:hover {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8;
+    background-color: var(--secondary-color);
+    border-color: var(--third-color);
 }
 
 .btn-outline-primary:focus,
@@ -3984,7 +3984,7 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:focus:not(:checked)~.custom-control-label::before {
-    border-color: #63d9ec;
+    border-color: var(--secondary-color);
 }
 
 .custom-control-input:not(:disabled):active~.custom-control-label::before {
@@ -4270,7 +4270,7 @@ input[type="button"].btn-block {
     width: 1rem;
     height: 1rem;
     margin-top: -0.25rem;
-    background-color: #17a2b8;
+    background-color: var(--secondary-color);
     border: 0;
     border-radius: 1rem;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -4300,7 +4300,7 @@ input[type="button"].btn-block {
 .custom-range::-moz-range-thumb {
     width: 1rem;
     height: 1rem;
-    background-color: #17a2b8;
+    background-color: var(--secondary-color);
     border: 0;
     border-radius: 1rem;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -4314,7 +4314,7 @@ input[type="button"].btn-block {
 }
 
 .custom-range::-moz-range-thumb:active {
-    background-color: #90e4f1;
+    background-color: var(--secondary-color);
 }
 
 .custom-range::-moz-range-track {
@@ -4333,7 +4333,7 @@ input[type="button"].btn-block {
     margin-top: 0;
     margin-right: 0.2rem;
     margin-left: 0.2rem;
-    background-color: #17a2b8;
+    background-color: var(--secondary-color);
     border: 0;
     border-radius: 1rem;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -4475,7 +4475,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
     color: #fff;
-    background-color: #17a2b8;
+    background-color: var(--secondary-color);
 }
 
 .nav-fill>.nav-link,
@@ -6935,7 +6935,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #17a2b8 !important;
+    background-color: var(--secondary-color) !important;
 }
 
 a.bg-primary:hover,
@@ -10658,7 +10658,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-    color: #17a2b8 !important;
+    color: var(--secondary-color) !important;
 }
 
 a.text-primary:hover,
@@ -10879,12 +10879,12 @@ a.text-dark:focus {
     display: inline-block;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #17a2b8;
+    color: var(--primary-color);
 }
 
 .section-title span {
     position: relative;
-    background: #ffffff;
+    background: var(--fourth-color);
     z-index: 1;
 }
 
@@ -10895,7 +10895,7 @@ a.text-dark:focus {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #17a2b8;
+    background: var(--secondary-color);
 }
 
 [class^=flaticon-]:before,
@@ -10927,13 +10927,13 @@ a.text-dark:focus {
 
 .navbar-light .navbar-nav .nav-link {
     padding: 30px 15px;
-    color: #00394f;
+    color: var(--primary-color);
     outline: none;
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link.active {
-    color: #17a2b8;
+    color: var(--third-color);
 }
 
 @media (max-width: 991.98px) {

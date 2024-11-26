@@ -21,10 +21,15 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav font-weight-bold mx-auto py-0">
-                    <a href="{{ route('index') }}" class="nav-item nav-link active">Inicio</a>
-                    <a href="{{ route('about') }}" class="nav-item nav-link">Sobre Nosotros</a>
+                    <a href="" class="nav-item nav-link">Maestros</a>
+                    <a href="" class="nav-item nav-link">Alumnos</a>
+                    <a href="" class="nav-item nav-link">Salones</a>
+                    <a href="" class="nav-item nav-link">Edificios</a>
+                    <a href="" class="nav-item nav-link">Instituciones</a>
+                    <a href="{{ route('schedule') }}" class="nav-item nav-link">Horarios</a>
+                    <a href="{{ route('search') }}" class="nav-item nav-link">Buscar</a>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-primary px-4">Log in</a>
+                <a href="{{ route('index') }}" class="btn btn-primary px-4">Logout</a>
             </div>
         </nav>
     </div>

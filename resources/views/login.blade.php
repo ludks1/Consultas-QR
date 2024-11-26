@@ -15,7 +15,20 @@
 </head>
 
 <body>
-    @include('navbar')
+    @if (auth()->check())
+        @php
+            $type = auth()->user()->type;
+        @endphp
+        @if ($type == \App\Enums\UserType::ADMIN)
+            <!-- Navbar para Administradores -->
+            @include('adminnavbar')
+        @elseif ($type == \App\Enums\UserType::STUDENT || $type === \App\Enums\UserType::TEACHER)
+            <!-- Navbar para Usuarios -->
+            @include('usernavbar')
+        @endif
+    @else
+        @include('navbar')
+    @endif
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="card p-4 shadow" style="width: 400px;">
             <h3 class="text-center mb-4">Iniciar Sesión</h3>

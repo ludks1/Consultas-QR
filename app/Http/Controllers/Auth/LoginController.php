@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,13 +26,19 @@ class LoginController extends Controller
 
         // Intentar autenticar al usuario
         $user = User::where('email', $request->email)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return redirect()->route('index')->with('Acceso consedido');
+        if (!$user) {
+            return back()->with('error', 'Usuario no encontrado');
         }
 
-        return redirect()->route('index')->with('error', 'Credenciales incorrectas');
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Contraseña incorrecta');
+        }
+
+        // Iniciar la sesión del usuario
+        Auth::login($user);
+
+        // Redirigir según el rol del usuario o a la página principal
+        return redirect()->route('index');
     }
 
     public function logout()
