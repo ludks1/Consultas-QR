@@ -20,18 +20,16 @@
             $type = auth()->user()->type;
         @endphp
         @if ($type == \App\Enums\UserType::ADMIN)
-            <!-- Navbar para Administradores -->
-            @include('adminnavbar')
-        @elseif ($type == \App\Enums\UserType::STUDENT || $type === \App\Enums\UserType::TEACHER)
             <!-- Navbar para Usuarios -->
+            @include('opnavbar')
+        @else
+            <!-- Navbar para Administradores -->
             @include('usernavbar')
         @endif
     @else
+        <!-- Navbar para Invitados -->
         @include('navbar')
     @endif
-    <!-- Navbar para Invitados -->
-
-
     <!-- Navbar End -->
 
     <!-- Header Start -->

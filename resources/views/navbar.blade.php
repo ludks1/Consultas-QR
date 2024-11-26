@@ -24,7 +24,20 @@
                     <a href="{{ route('index') }}" class="nav-item nav-link active">Inicio</a>
                     <a href="{{ route('about') }}" class="nav-item nav-link">Sobre Nosotros</a>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-primary px-4">Log in</a>
+
+                @if (auth()->check())
+                    @php
+                        $type = auth()->user()->type;
+                    @endphp
+                    <!-- Formulario de Cerrar sesión (Método POST) -->
+                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-primary px-4">Log out</button>
+                    </form>
+                @else
+                    <!-- Botón de Iniciar sesión -->
+                    <a href="{{ route('login') }}" class="btn btn-primary px-4">Log in</a>
+                @endif
             </div>
         </nav>
     </div>

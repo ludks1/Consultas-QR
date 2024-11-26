@@ -14,7 +14,7 @@
         <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
             <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
                 <i class="flaticon-043-teddy-bear"></i>
-                <span class="text-primary">CodeFlow</span>
+                <span class="text-primary">CodeFlow Usuarios</span>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,19 @@
                     <a href="{{ route('schedule') }}" class="nav-item nav-link">Horarios</a>
                     <a href="{{ route('search') }}" class="nav-item nav-link">Buscar</a>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-primary px-4">Log in</a>
+                @if (auth()->check())
+                    @php
+                        $type = auth()->user()->type;
+                    @endphp
+                    <!-- Formulario de Cerrar sesión (Método POST) -->
+                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-primary px-4">Log out</button>
+                    </form>
+                @else
+                    <!-- Botón de Iniciar sesión -->
+                    <a href="{{ route('login') }}" class="btn btn-primary px-4">Log in</a>
+                @endif
             </div>
         </nav>
     </div>

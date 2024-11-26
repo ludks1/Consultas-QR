@@ -16,10 +16,6 @@ class UserService
      */
     public function createUser(array $data): User
     {
-        if (User::where('type', UserType::ADMIN)->exists()) {
-            throw ValidationException::withMessages(['type' => 'Ya existe un administrador.']);
-        }
-
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
