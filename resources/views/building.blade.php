@@ -27,31 +27,37 @@
         </div>
     </div>
 
-    <body>
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Crear Nuevo Edificio</h2>
-            <form action="/create-classroom" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="classroomName">Nombre o Código del Edificio</label>
-                    <input type="text" class="form-control" id="classroomName" name="classroom_name"
-                        placeholder="Ej. Edificio F" required>
-                </div>
-                <div class="form-group">
-                    <label for="institutionSelect">Seleccionar Institución</label>
-                    <select class="form-control" id="institutionSelect" name="institution_id" required>
-                        <option value="">Seleccione una institución</option>
-                        <!-- Iterar instituciones -->
-                        <option value="1">Universidad Nacional</option>
-                        <option value="2">Instituto Técnico</option>
-                    </select>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Crear Edificio</button>
-                </div>
-            </form>
-        </div>
-    </body>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Crear Nuevo Edificio</h2>
+        <form action="{{ route('building.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="name">Nombre o Código del Edificio</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Edificio F"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="address">Dirección del Edificio</label>
+                <input type="text" class="form-control" id="address" name="address"
+                    placeholder="Ej. Frente a dirección, a un lado de control escolar" required>
+            </div>
+            <div class="form-group">
+                <label for="numberOfFloors">Número de pisos del Edificio</label>
+                <input type="number" class="form-control" id="numberOfFloors" name="numberOfFloors" placeholder="Ej. 3"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="institutionId">Seleccionar Institución</label>
+                <select class="form-control" id="institutionId" name="institutionId" required>
+                    <option value="">Seleccione una institución</option>
+                    @foreach ($institutions as $institution)
+                        <option value="{{ $institution->id }}">{{ $institution->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
 
 
     @include('footer')

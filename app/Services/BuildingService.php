@@ -11,20 +11,20 @@ class BuildingService
     public function createBuilding(array $data): Building
     {
         return Building::create([
-            'institutionId'=> $data['institutionId'],
-            'name'=> $data['name'],
-            'address'=> $data['address'],
-            'numberOfFloors'=> $data['numberOfFloors'],
+            'institutionId' => $data['institutionId'],
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'numberOfFloors' => $data['numberOfFloors'],
         ]);
     }
 
     public function updateBuildin(Space $space, array $data): Space
     {
         $space->update([
-            'institutionId'=> $data['institutionId'],
-            'name'=> $data['name'],
-            'address'=> $data['address'],
-            'numberOfFloors'=> $data['numberOfFloors'],
+            'institutionId' => $data['institutionId'],
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'numberOfFloors' => $data['numberOfFloors'],
         ]);
         return $space;
     }

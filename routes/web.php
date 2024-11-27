@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
@@ -61,11 +62,9 @@ Route::get('/spaces_admin', function () {
     return view('space');
 })->name('space');
 
+Route::get('/building', [BuildingController::class, 'showBuildingForm'])->name('building');
 
-Route::get('/buildings_admin', function () {
-    return view('building');
-})->name('building');
-
+Route::post('/create-building', [BuildingController::class, 'store'])->name('building.store');
 
 Route::get('/institutions_admin', [InstitutionController::class, 'showInstitutionForm'])->name('institution');
 

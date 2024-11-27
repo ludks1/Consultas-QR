@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BuildingService;
 use App\Models\Building;
+use App\Models\Institution;
 use Illuminate\Http\Request;
 
 class BuildingController extends Controller
 {
+
+    protected $buildingService;
+
+    public function __construct(BuildingService $buildingService)
+    {
+        $this->buildingService = $buildingService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -22,18 +31,20 @@ class BuildingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'institutionId' => 'required|integer',
-            'name' => 'required|string',
-            'address' => 'optional|string',
+            'name' => 'required|string|unique:buildings',
+            'address' => 'required|string',
+            'numberOfFloors' => 'required|integer',
+            'institutionId' => 'required|exists:institutions,id',
         ]);
 
-        $building = Building::create([
-            'institutionId' => $request->institutionId,
-            'name' => $request->name,
-            'address' => $request->address,
-        ]);
+        $data = $request->all();
 
-        return response()->json($building, 201);
+        try {
+            $this->buildingService->createBuilding($data);
+            return redirect()->route('building')->with('success', 'Edificio creado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un error al crear el edificio: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -75,5 +86,11 @@ class BuildingController extends Controller
         $building->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function showBuildingForm()
+    {
+        $institutions = Institution::all(); // Obtén todas las instituciones de la base de datos
+        return view('building', compact('institutions'));
     }
 }

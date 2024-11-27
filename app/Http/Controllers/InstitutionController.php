@@ -39,12 +39,9 @@ class InstitutionController extends Controller
 
         $data = $request->all();
 
-        try {
             $this->institutionService->createInstitution($data);
-            return redirect()->route('institution')->with('success', 'Institution created successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'There was an error creating the institution: ' . $e->getMessage());
-        }
+
+        return redirect()->route('institution');
     }
 
     /**
