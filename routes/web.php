@@ -45,3 +45,26 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// rutas de navbar para administrador
+Route::get('/teachers_admin', function () {
+    return view('teacher');
+})->name('teacher');
+
+Route::get('/students_admin', function () {
+    return view('student');
+})->name('student');
+
+
+Route::get('/spaces_admin', function () {
+    return view('space');
+})->name('space');
+
+
+Route::get('/buildings_admin', function () {
+    return view('building');
+})->name('building');
+
+Route::get('/institutions_admin', function () {
+    return view('institution');
+})->name('institution');
