@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institution;
+use App\Services\InstitutionService;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
 {
+
+    protected $institutionService;
+
+    public function __construct(InstitutionService $institutionService)
+    {
+        $this->institutionService = $institutionService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,20 +28,23 @@ class InstitutionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {;
         $request->validate([
             'name' => 'required|string|unique:institutions',
             'address' => 'required|string',
-            'logo' => 'required|string',
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'phone' => 'required|string',
+            'email' => 'required|string|email',
         ]);
 
-        $institution = Institution::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'logo' => $request->logo,
-        ]);
+        $data = $request->all();
 
-        return response()->json($institution, 201);
+        try {
+            $this->institutionService->createInstitution($data);
+            return redirect()->route('institution')->with('success', 'Institution created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'There was an error creating the institution: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -76,5 +87,10 @@ class InstitutionController extends Controller
         $institution->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function showInstitutionForm()
+    {
+        return view('institution');
     }
 }

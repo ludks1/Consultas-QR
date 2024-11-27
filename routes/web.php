@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +66,7 @@ Route::get('/buildings_admin', function () {
     return view('building');
 })->name('building');
 
-Route::get('/institutions_admin', function () {
-    return view('institution');
-})->name('institution');
+
+Route::get('/institutions_admin', [InstitutionController::class, 'showInstitutionForm'])->name('institution');
+
+Route::post('/create-institution', [InstitutionController::class, 'store'])->name('institution.store');

@@ -14,18 +14,13 @@ class InstitutionService
     /**
      * @throws ValidationException
      */
-    public function createInstitution(array $data): Institution
+    public function createInstitution(array $data)
     {
-        if ($data['type'] !== UserType::ADMIN && User::where('type', UserType::ADMIN)->exists()) {
-            throw ValidationException::withMessages(['type' => 'Ya existe un administrador.']);
+        if (isset($data['logo'])) {
+            $data['logo'] = $data['logo']->store('logos', 'public');
         }
-        return Institution::create([
-            'name' => $data['name'],
-            'address' => $data['address'],
-            'logo' => $data['logo'],
-            'phone' => $data['phone'],
-            'email' => $data['email'],
-        ]);
+
+        Institution::create($data);
     }
 
     public function updateInstitutions(Institution $institution, array $data): Institution

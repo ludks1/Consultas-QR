@@ -30,16 +30,33 @@
     <body>
         <div class="container my-5">
             <h2 class="text-center mb-4">Crear Nueva Institucion</h2>
-            <form action="/create-classroom" method="POST">
+            <form action="{{ route('institution.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="classroomName">Nombre de la Institucion</label>
-                    <input type="text" class="form-control" id="classroomName" name="classroom_name"
-                        placeholder="Ej. Instituto Tecnologico de Toluca" required>
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                        placeholder="Ingrese el nombre" required>
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Crear Institucion</button>
+                <div class="form-group">
+                    <label for="address">Dirección</label>
+                    <input type="text" class="form-control" id="address" name="address"
+                        placeholder="Ingrese la dirección" required>
                 </div>
+                <div class="form-group">
+                    <label for="logo">Logo</label>
+                    <input type="file" class="form-control" id="logo" name="logo" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                        placeholder="Ingrese el teléfono" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                        placeholder="Ingrese el correo electrónico" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar</button>
             </form>
         </div>
     </body>
