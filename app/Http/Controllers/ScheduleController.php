@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Career;
 use App\Models\Building;
 use App\Models\Institution;
 use App\Models\Schedule;
@@ -131,6 +132,8 @@ class ScheduleController extends Controller
         return response()->json(null, 204);
     }
 
+
+    // se necesita mandar la materia para crear el horario en la bdd
     public function showScheduleForm(Request $request)
     {
         $institutions = Institution::all();

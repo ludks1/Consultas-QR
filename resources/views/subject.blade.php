@@ -46,18 +46,39 @@
         <form action="{{ route('subject.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="classroomName">Nombre de la Materia</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Aula 101"
+                <label for="name">Nombre de la Materia</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Matematicas"
                     required>
             </div>
             <div class="form-group">
-                <label for="capacity">Codigo de la materia</label>
-                <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Ej. 30 personas"
+                <label for="description">Descripcion de la Materia</label>
+                <input type="text" class="form-control" id="description" name="description"
+                    placeholder="Ej. Ciencia que estudia las características y vínculos en valores abstractos como los números, geométricas y aritméticas."
                     required>
+            </div>
+            <div class="form-group">
+                <label for="code">Codigo de la materia</label>
+                <input type="number" class="form-control" id="code" name="code" placeholder="Ej. 001" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semestre</label>
+                <select class="form-control" id="semester" name="semester" required>
+                    <option value="">Seleccione un Semestre</option>
+                    <option value="1">Primer</option>
+                    <option value="2">Segundo</option>
+                    <option value="3">Tercer</option>
+                    <option value="4">Cuarto</option>
+                    <option value="5">Quinto</option>
+                    <option value="6">Sexto</option>
+                    <option value="7">Septimo</option>
+                    <option value="8">Octavo</option>
+                    <option value="9">Noveno</option>
+                    <option value="10">Decimo</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="careerSelect">Carera</label>
+                <label for="career">Carera</label>
                 <select class="form-control" id="career" name="career" required>
                     <option value="">Seleccione una Carrera</option>
                     @foreach ($careers as $career)

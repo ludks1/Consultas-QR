@@ -6,28 +6,29 @@ use App\Enums\UserType;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class SubjectService
 {
-    public function addSubject(User $user, Subject $subject, array $data): Subject
+    public function addSubject(array $data): Subject
     {
-        if ($user->subjects()->where('id', $subject)->exists()) {
-            throw ValidationException::withMessages(['subjectId' => 'La materia ya está asignada.']);
+        // Crea la materia en la base de datos con los datos proporcionados
+        try {
+            return Subject::create([
+                'name' => $data['name'],
+                'code' => $data['code'],
+                'description' => $data['description'] ?? null,
+                'career' => $data['career'],
+                'semester' => $data['semester'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error al crear materia: ' . $e->getMessage());
+            throw $e;
         }
-        if ($user['type'] !== UserType::ADMIN) {
-            throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear una materia.']);
-        }
-        return $subject->create([
-            'name' => $data['name'],
-            'code' => $data['code'],
-            'description' => $data['description'],
-            'career' => $data['career'],
-            'semester' => $data['semester'],
-        ]);
     }
 
-    public function updateSubject(User$user, Subject $subject, array $data): Subject
+    public function updateSubject(User $user, Subject $subject, array $data): Subject
     {
         if ($user['type'] !== UserType::ADMIN) {
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear una materia.']);

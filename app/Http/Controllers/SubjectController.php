@@ -4,39 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Enums\Career;
 use App\Models\Subject;
+use App\Services\SubjectService;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
+    protected $subjectService;
+
+    public function __construct(SubjectService $subjectService)
+    {
+        $this->subjectService = $subjectService;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $subjects = Subject::all();
-        return response()->json($subjects);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'code' => 'required|string',
-            'description' => 'string',
-            'career' => 'required|string',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:50|unique:subjects,code',
+            'description' => 'nullable|string|max:1000',
+            'career' => 'required|string|max:255',
+            'semester' => 'nullable|integer|min:1|max:10',
         ]);
 
-        $subject = Subject::create([
-            'name' => $request->name,
-            'code' => $request->code,
-            'description' => $request->description,
-            'career' => $request->career,
-        ]);
+        // Depuración
 
-        return response()->json($subject, 201);
+        $this->subjectService->addSubject($validatedData);
+
+        return redirect()->route('subject')->with('success', 'Materia creada exitosamente.');
     }
 
     /**

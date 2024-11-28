@@ -13,12 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subjects', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('name')->nullable(false);
+            $table->id();
+            $table->string('name')->nullable();
             $table->integer('code');
             $table->text('description')->nullable();
-            $table->enum('career', [
-                    Career::ISW->value, Career::IPI->value, Career::ITC->value
+            $table->enum(
+                'career',
+                [
+                    Career::ISW->value,
+                    Career::IPI->value,
+                    Career::ITC->value
                 ]
             )->default(Career::ISW->value);
             $table->integer('semester')->default(1);
