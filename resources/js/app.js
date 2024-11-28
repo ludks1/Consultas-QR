@@ -1,5 +1,4 @@
 import './bootstrap';
-
 (function ($) {
     "use strict";
 
@@ -20,6 +19,7 @@ import './bootstrap';
         $(window).resize(toggleNavbarMethod);
     });
 
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -39,15 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Selecciona los elementos
     const institutionSelect = document.getElementById('institutionId');
     const buildingSelect = document.getElementById('buildingId');
-    const floorSelect = document.getElementById('floorSelect');
+    const spaceSelect = document.getElementById('spaceSelect');  // Salones
+    const floorSelect = document.getElementById('floorSelect');  // Pisos (solo si existe)
 
     // Función para obtener edificios cuando se selecciona una institución
     institutionSelect.addEventListener('change', function () {
         const institutionId = this.value;
 
-        // Limpiar los selectores de edificios y pisos antes de llenarlos
+        // Limpiar los selectores de edificios, pisos y salones antes de llenarlos
         buildingSelect.innerHTML = '<option value="">Seleccione un edificio</option>';
-        floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+        if (floorSelect) floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+        if (spaceSelect) spaceSelect.innerHTML = '<option value="">Seleccione un salón</option>';
 
         if (institutionId) {
             // Hacer la solicitud AJAX para obtener los edificios de la institución seleccionada
@@ -67,28 +69,49 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Función para obtener pisos cuando se selecciona un edificio
+    // Función para obtener pisos o salones cuando se selecciona un edificio
     buildingSelect.addEventListener('change', function () {
         const buildingId = this.value;
 
-        // Limpiar el selector de pisos antes de llenarlo
-        floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+        // Limpiar el selector de pisos y salones antes de llenarlos
+        if (floorSelect) floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+        if (spaceSelect) spaceSelect.innerHTML = '<option value="">Seleccione un salón</option>';
 
         if (buildingId) {
-            // Hacer la solicitud AJAX para obtener los pisos del edificio seleccionado
-            fetch(`/get-floors/${buildingId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.floors && data.floors.length) {
-                        // Llenar el selector de pisos
-                        data.floors.forEach(floor => {
-                            const option = document.createElement('option');
-                            option.value = floor;
-                            option.textContent = `Piso ${floor}`;
-                            floorSelect.appendChild(option);
-                        });
-                    }
-                });
+            // Verificar si tenemos que cargar pisos o salones
+            if (floorSelect) {
+                // Si hay un selector de pisos, hacer la solicitud para obtener los pisos del edificio
+                fetch(`/get-floors/${buildingId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.floors && data.floors.length) {
+                            // Llenar el selector de pisos
+                            data.floors.forEach(floor => {
+                                const option = document.createElement('option');
+                                option.value = floor;
+                                option.textContent = `Piso ${floor}`;
+                                floorSelect.appendChild(option);
+                            });
+                        }
+                    });
+            }
+
+            if (spaceSelect) {
+                // Si hay un selector de salones, hacer la solicitud para obtener los salones del edificio
+                fetch(`/get-spaces/${buildingId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.spaces && data.spaces.length) {
+                            // Llenar el selector de salones
+                            data.spaces.forEach(space => {
+                                const option = document.createElement('option');
+                                option.value = space.id;
+                                option.textContent = space.name;
+                                spaceSelect.appendChild(option);
+                            });
+                        }
+                    });
+            }
         }
     });
 });
