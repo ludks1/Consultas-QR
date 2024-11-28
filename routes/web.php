@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::get('/about', function () {
 
 // rutas de horarios
 Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
+
 Route::get('/schedule', function () {
     return view('schedule');
 })->name('schedule');
@@ -57,12 +59,14 @@ Route::get('/students_admin', function () {
     return view('student');
 })->name('student');
 
+Route::get('/space_admin', [SpaceController::class, 'showSpaceForm'])->name('space');
+Route::post('/create-space', [SpaceController::class, 'store'])->name('space.store');
 
-Route::get('/spaces_admin', function () {
-    return view('space');
-})->name('space');
+// Rutas para obtener edificios y pisos con AJAX
+Route::get('/get-buildings/{institutionId}', [SpaceController::class, 'getBuildings']);
+Route::get('/get-floors/{buildingId}', [SpaceController::class, 'getFloors']);
 
-Route::get('/building', [BuildingController::class, 'showBuildingForm'])->name('building');
+Route::get('/building_admin', [BuildingController::class, 'showBuildingForm'])->name('building');
 
 Route::post('/create-building', [BuildingController::class, 'store'])->name('building.store');
 

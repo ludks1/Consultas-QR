@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userService->getUsers();
-        return response()->json($users);
+        return redirect()->route('student', compact('users'));
     }
 
     /**

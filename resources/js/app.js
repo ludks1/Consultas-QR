@@ -1,4 +1,5 @@
 import './bootstrap';
+
 (function ($) {
     "use strict";
 
@@ -19,7 +20,6 @@ import './bootstrap';
         $(window).resize(toggleNavbarMethod);
     });
 
-
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -36,17 +36,59 @@ import './bootstrap';
 })(jQuery);
 
 document.addEventListener('DOMContentLoaded', function () {
-    const userTypeSelect = document.getElementById('user_type');
-    const userCareerDiv = document.getElementById('user_career_div');
+    // Selecciona los elementos
+    const institutionSelect = document.getElementById('institutionId');
+    const buildingSelect = document.getElementById('buildingId');
+    const floorSelect = document.getElementById('floorSelect');
 
-    function toggleCareerField() {
-        if (userTypeSelect.value === 'student') {
-            userCareerDiv.style.display = 'block';
-        } else {
-            userCareerDiv.style.display = 'none';
+    // Función para obtener edificios cuando se selecciona una institución
+    institutionSelect.addEventListener('change', function () {
+        const institutionId = this.value;
+
+        // Limpiar los selectores de edificios y pisos antes de llenarlos
+        buildingSelect.innerHTML = '<option value="">Seleccione un edificio</option>';
+        floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+
+        if (institutionId) {
+            // Hacer la solicitud AJAX para obtener los edificios de la institución seleccionada
+            fetch(`/get-buildings/${institutionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.buildings && data.buildings.length) {
+                        // Llenar el selector de edificios
+                        data.buildings.forEach(building => {
+                            const option = document.createElement('option');
+                            option.value = building.id;
+                            option.textContent = building.name;
+                            buildingSelect.appendChild(option);
+                        });
+                    }
+                });
         }
-    }
+    });
 
-    userTypeSelect.addEventListener('change', toggleCareerField);
-    toggleCareerField(); // Initial check
+    // Función para obtener pisos cuando se selecciona un edificio
+    buildingSelect.addEventListener('change', function () {
+        const buildingId = this.value;
+
+        // Limpiar el selector de pisos antes de llenarlo
+        floorSelect.innerHTML = '<option value="">Seleccione un piso</option>';
+
+        if (buildingId) {
+            // Hacer la solicitud AJAX para obtener los pisos del edificio seleccionado
+            fetch(`/get-floors/${buildingId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.floors && data.floors.length) {
+                        // Llenar el selector de pisos
+                        data.floors.forEach(floor => {
+                            const option = document.createElement('option');
+                            option.value = floor;
+                            option.textContent = `Piso ${floor}`;
+                            floorSelect.appendChild(option);
+                        });
+                    }
+                });
+        }
+    });
 });

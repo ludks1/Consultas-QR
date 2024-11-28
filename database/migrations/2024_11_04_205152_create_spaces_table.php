@@ -12,12 +12,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('spaces', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
             $table->foreignId('buildingId')->constrained('buildings')->onDelete('cascade');
             $table->integer('floor')->default(1);
-            $table->string('name')->nullable(false);
+            $table->string('name');
             $table->string('addressDescription')->nullable();
-            $table->enum('type', [
+            $table->enum(
+                'type',
+                [
                     SpaceType::COURT->value,
                     SpaceType::AUDITORIUM->value,
                     SpaceType::CAFETERIA->value,
@@ -34,7 +36,7 @@ return new class extends Migration {
                     SpaceType::SECURITY_ROOM->value
                 ]
             )->default(SpaceType::CLASSROOM->value);
-            $table->text('qrCode')->nullable(false);
+            $table->longText('qrCode')->nullable();
             $table->integer('capacity')->default(1);
             $table->timestamps();
         });

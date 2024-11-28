@@ -27,41 +27,67 @@
         </div>
     </div>
 
-    <body>
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Crear Nuevo Salón</h2>
-            <form action="/create-classroom" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="classroomName">Nombre o Código del Salón</label>
-                    <input type="text" class="form-control" id="classroomName" name="classroom_name"
-                        placeholder="Ej. Aula 101" required>
-                </div>
-                <div class="form-group">
-                    <label for="buildingSelect">Seleccionar Edificio</label>
-                    <select class="form-control" id="buildingSelect" name="building_id" required>
-                        <option value="">Seleccione un edificio</option>
-                        <!-- Iterar edificios -->
-                        <option value="1">Edificio A</option>
-                        <option value="2">Edificio B</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="institutionSelect">Seleccionar Institución</label>
-                    <select class="form-control" id="institutionSelect" name="institution_id" required>
-                        <option value="">Seleccione una institución</option>
-                        <!-- Iterar instituciones -->
-                        <option value="1">Universidad Nacional</option>
-                        <option value="2">Instituto Técnico</option>
-                    </select>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Crear Salón</button>
-                </div>
-            </form>
-        </div>
-    </body>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Crear Nuevo Salón</h2>
+        <form action="{{ route('space.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="classroomName">Nombre o Código del Salón</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Aula 101"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="capacity">Capacidad del salón</label>
+                <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Ej. 30 personas"
+                    required>
+            </div>
 
+            <div class="form-group">
+                <label for="institutionSelect">Seleccionar Institución</label>
+                <select class="form-control" id="institutionId" name="institutionId" required>
+                    <option value="">Seleccione una institución</option>
+                    @foreach ($institutions as $institution)
+                        <option value="{{ $institution->id }}">{{ $institution->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="buildingSelect">Seleccionar Edificio</label>
+                <select class="form-control" id="buildingId" name="buildingId" required>
+                    <option value="">Seleccione un edificio</option>
+                    @foreach ($buildings as $building)
+                        <option value="{{ $building->id }}">{{ $building->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="floorSelect">Seleccionar Piso</label>
+                <select class="form-control" id="floorSelect" name="floor" required>
+                    <option value="">Seleccione un piso</option>
+                    @foreach ($floors as $floor)
+                        <option value="{{ $floor }}">{{ $floor }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="spaceTypeSelect">Seleccionar tipo</label>
+                <select class="form-control" id="type" name="type" required>
+                    <option value="">Seleccione un tipo</option>
+                    @foreach ($spaceTypes as $type)
+                        <option value="{{ $type }}">{{ $type }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+        </form>
+
+    </div>
 
     @include('footer')
     <!-- Back to Top -->

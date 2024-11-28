@@ -34,8 +34,9 @@ class Space extends Model
         return $this->belongsToMany(Subject::class, 'space_subject');
     }
 
-    public function events(){
-        if(in_array($this->category, [SpaceType::AUDITORIUM, SpaceType::COURT])){
+    public function events()
+    {
+        if (in_array($this->category, [SpaceType::AUDITORIUM, SpaceType::COURT])) {
             return $this->hasMany(Event::class);
         }
         return null;
