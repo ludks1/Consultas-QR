@@ -3,25 +3,55 @@
 namespace App\Services;
 
 use App\Enums\UserType;
+use App\Models\Building;
+use App\Models\Institution;
 use App\Models\Schedule;
+use App\Models\Space;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
 
 class ScheduleService
 {
-    public function createSchedule(User $user, Schedule $schedule): Schedule
+    public function storeSchedule(array $data)
     {
-        if ($user['type'] !== UserType::ADMIN) {
-            throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear un horario.']);
+        // Validar que la hora de inicio no sea mayor que la hora de fin
+        if (strtotime($data['startIime']) >= strtotime($data['endIime'])) {
+            return 'La hora de inicio no puede ser mayor o igual a la hora de fin';
         }
-        return Schedule::create([
-            'spaceId' => $schedule['spaceId'],
-            'subjectId' => $schedule['subjectId'],
-            'day' => $schedule['day'],
-            'startIime' => $schedule['startIime'],
-            'endIime' => $schedule['endIime'],
-        ]);
+
+        // Verificar conflictos en el mismo salón, mismo día y horario solapado
+        $conflict = Schedule::where('spaceId', $data['spaceId'])
+            ->where('day', $data['day'])
+            ->where(function ($query) use ($data) {
+                // Conflicto si las horas se solapan
+                $query->whereBetween('startIime', [$data['startIime'], $data['endIime']])
+                    ->orWhereBetween('endIime', [$data['startIime'], $data['endIime']])
+                    ->orWhere(function ($query) use ($data) {
+                        $query->where('startIime', '<=', $data['startIime'])
+                            ->where('endIime', '>=', $data['endIime']);
+                    });
+            })
+            ->exists();
+
+        if ($conflict) {
+            return 'Existe un conflicto de horario con otro evento en el mismo salón y día';
+        }
+
+        // Crear el horario si no hay conflictos
+        try {
+            Schedule::create([
+                'startIime' => $data['startIime'],  // Verifica que sea 'start_time' en tu base de datos
+                'endIime' => $data['endIime'],      // Lo mismo para 'end_time'
+                'day' => $data['day'],
+                'subjectId' => $data['subjectId'],
+                'spaceId' => $data['spaceId'],
+            ]);
+        } catch (\Exception $e) {
+            return 'Error al registrar el horario: ' . $e->getMessage();
+        }
+
+        return true; // Horario registrado con éxito
     }
 
     public function updateSchedule(User $user, Schedule $schedule, array $data): Schedule
@@ -56,5 +86,10 @@ class ScheduleService
         } else {
             throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para ver el horario.']);
         }
+    }
+
+    public function getSpaces()
+    {
+        return Space::all();
     }
 }

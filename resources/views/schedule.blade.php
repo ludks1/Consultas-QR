@@ -46,67 +46,74 @@
     </div>
     <!-- Header End -->
 
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Crear Nuevo Horario</h2>
+        <form action="{{ route('schedule.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="startIime">Hora de Inicio</label>
+                <input type="time" class="form-control" name="startIime" id="startIime"
+                    value="{{ request('startIime') }}">
+            </div>
+            <div class="form-group">
+                <label for="endIime">Hora de Fin</label>
+                <input type="time" class="form-control" name="endIime" id="endIime"
+                    value="{{ request('endIime') }}">
+            </div>
 
-    <!-- Gallery Start -->
-    <form action="{{ route('schedule') }}" method="GET">
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <label for="start_time">Hora de Inicio</label>
-                <input type="time" class="form-control" name="start_time" id="start_time"
-                    value="{{ request('start_time') }}">
+            <div class="form-group">
+                <label for="day">Fecha</label>
+                <input type="date" class="form-control" name="day" id="day" value="{{ request('day') }}">
             </div>
-            <div class="col-md-3 mb-3">
-                <label for="end_time">Hora de Fin</label>
-                <input type="time" class="form-control" name="end_time" id="end_time"
-                    value="{{ request('end_time') }}">
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="date">Fecha</label>
-                <input type="date" class="form-control" name="date" id="date" value="{{ request('date') }}">
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="subject">Materia</label>
-                <input type="text" class="form-control" name="subject" id="subject"
-                    value="{{ request('subject') }}">
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="room">Salón</label>
-                <input type="text" class="form-control" name="room" id="room" value="{{ request('room') }}">
-            </div>
-            <div class="col-md-12 mb-3">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </div>
-        </div>
-    </form>
 
-    <!-- Resultados de la búsqueda -->
-    @if (isset($schedules) && count($schedules) > 0)
-        <div class="row">
-            @foreach ($schedules as $schedule)
-                <div class="col-md-6 col-lg-3 text-center mb-5">
-                    <div class="schedule-item">
-                        <h5>{{ $schedule->subject }}</h5>
-                        <p><strong>Hora:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}</p>
-                        <p><strong>Fecha:</strong> {{ $schedule->date }}</p>
-                        <p><strong>Salón:</strong> {{ $schedule->room }}</p>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @else
-        <p>No se encontraron horarios para la búsqueda.</p>
-    @endif
-    <!-- Gallery End -->
+            <div class="form-group">
+                <label for="subjectId">Materia</label>
+                <input type="text" class="form-control" id="subjectId" name="subjectId" placeholder="Ej. Matematicas"
+                    required>
+            </div>
 
+            <div class="form-group">
+                <label for="institutionSelect">Seleccionar Institución</label>
+                <select class="form-control" id="institutionId" name="institutionId" required>
+                    <option value="">Seleccione una institución</option>
+                    @foreach ($institutions as $institution)
+                        <option value="{{ $institution->id }}">{{ $institution->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="buildingSelect">Seleccionar Edificio</label>
+                <select class="form-control" id="buildingId" name="buildingId" required>
+                    <option value="">Seleccione un edificio</option>
+                    @foreach ($buildings as $building)
+                        <option value="{{ $building->id }}">{{ $building->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="spaceSelect">Seleccionar Salon</label>
+                <select class="form-control" id="spaceSelect" name="spaceId" required>
+                    <option value="">Seleccione un salon</option>
+                    @foreach ($spaces as $space)
+                        <option value="{{ $space->id }}">{{ $space->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+        </form>
+    </div>
 
     <!-- Footer Start -->
     @include('footer')
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
     <a href="{{ route('schedule') }}" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

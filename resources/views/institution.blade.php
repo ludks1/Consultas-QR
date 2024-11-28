@@ -14,7 +14,21 @@
 </head>
 
 <body>
-    @include('opnavbar')
+    @if (auth()->check())
+        @php
+            $type = auth()->user()->type;
+        @endphp
+        @if ($type == \App\Enums\UserType::ADMIN)
+            <!-- Navbar para Usuarios -->
+            @include('opnavbar')
+        @else
+            <!-- Navbar para Administradores -->
+            @include('usernavbar')
+        @endif
+    @else
+        <!-- Navbar para Invitados -->
+        @include('navbar')
+    @endif
 
     <div class="container-fluid bg-primary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
