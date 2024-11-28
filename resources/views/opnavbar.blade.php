@@ -23,10 +23,11 @@
                 <div class="navbar-nav font-weight-bold mx-auto py-0">
                     <a href="{{ route('teacher') }}" class="nav-item nav-link">Maestros</a>
                     <a href="{{ route('student') }}" class="nav-item nav-link">Alumnos</a>
+                    <a href="{{ route('schedule') }}" class="nav-item nav-link">Horarios</a>
                     <a href="{{ route('space') }}" class="nav-item nav-link">Salones</a>
                     <a href="{{ route('building') }}" class="nav-item nav-link">Edificios</a>
                     <a href="{{ route('institution') }}" class="nav-item nav-link">Instituciones</a>
-                    <a href="{{ route('schedule') }}" class="nav-item nav-link">Horarios</a>
+                    <a href="{{ route('subject') }}" class="nav-item nav-link">Materias</a>
                     <a href="{{ route('search') }}" class="nav-item nav-link">Buscar</a>
                 </div>
                 @if (auth()->check())

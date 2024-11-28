@@ -5,6 +5,7 @@ use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,9 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::get('/subject_admin', [SubjectController::class, 'showSubjectForm'])->name('subject');
+Route::post('/create-subject', [ScheduleController::class, 'store'])->name('subject.store');
 
 // Rutas de horarios
 Route::get('/schedule_admin', [ScheduleController::class, 'showScheduleForm'])->name('schedule');

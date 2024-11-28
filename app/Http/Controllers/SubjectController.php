@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Career;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -80,5 +81,11 @@ class SubjectController extends Controller
         $subject->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function showSubjectForm(Request $request)
+    {
+        $careers = Career::getOptions();
+        return view('subject', compact('careers'));
     }
 }
