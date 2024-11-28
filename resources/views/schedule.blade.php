@@ -65,13 +65,6 @@
                 <label for="day">Fecha</label>
                 <input type="date" class="form-control" name="day" id="day" value="{{ request('day') }}">
             </div>
-
-            <div class="form-group">
-                <label for="subjectId">Materia</label>
-                <input type="text" class="form-control" id="subjectId" name="subjectId" placeholder="Ej. Matematicas"
-                    required>
-            </div>
-
             <div class="form-group">
                 <label for="institutionSelect">Seleccionar Institución</label>
                 <select class="form-control" id="institutionId" name="institutionId" required>
@@ -98,6 +91,15 @@
                     <option value="">Seleccione un salon</option>
                     @foreach ($spaces as $space)
                         <option value="{{ $space->id }}">{{ $space->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subjectId">Seleccionar materia</label>
+                <select class="form-control" id="subjectId" name="subjectId" required>
+                    <option value="">Seleccione una materia</option>
+                    @foreach ($subjects as $subject)
+                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                     @endforeach
                 </select>
             </div>

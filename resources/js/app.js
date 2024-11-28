@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const buildingSelect = document.getElementById('buildingId');
     const spaceSelect = document.getElementById('spaceSelect');  // Salones
     const floorSelect = document.getElementById('floorSelect');  // Pisos (solo si existe)
+    const subjectSelect = document.getElementById('subjectId');
 
     // Función para obtener edificios cuando se selecciona una institución
     institutionSelect.addEventListener('change', function () {

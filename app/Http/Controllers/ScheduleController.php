@@ -7,6 +7,7 @@ use App\Models\Building;
 use App\Models\Institution;
 use App\Models\Schedule;
 use App\Models\Space;
+use App\Models\Subject;
 use App\Services\ScheduleService;
 use Illuminate\Http\Request;
 
@@ -139,6 +140,7 @@ class ScheduleController extends Controller
         $institutions = Institution::all();
         $buildings = [];
         $spaces = [];
+        $subjects = Subject::all();
         if ($request->has('institutionId')) {
             $buildings = Building::where('institutionId', $request->institutionId)->get();
         }
@@ -148,7 +150,10 @@ class ScheduleController extends Controller
         if ($request->has('spaceId')) {
             $spaces = Building::where('spaceId', $request->spaceId)->get();
         }
-        return view('schedule', compact('institutions', 'buildings', 'spaces'));
+        if ($request->has('subjectId')) {
+            $subjects = Subject::where('code', $request->code)->get();
+        }
+        return view('schedule', compact('institutions', 'buildings', 'spaces', 'subjects'));
     }
 
     public function getBuildings($institutionId)
