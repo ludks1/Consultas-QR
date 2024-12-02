@@ -21,8 +21,9 @@ class BuildingController extends Controller
      */
     public function index()
     {
+        $institutions = Institution::all();
         $buildings = Building::all();
-        return response()->json($buildings);
+        return view('buildingview', compact('buildings', 'institutions'));
     }
 
     /**
@@ -61,21 +62,24 @@ class BuildingController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Encuentra el edificio o lanza una excepción si no existe
         $building = Building::findOrFail($id);
-        $request->validate([
+
+        // Valida los datos del request
+        $validatedData = $request->validate([
+            'name' => 'required|string|unique:buildings,name,' . $id,
             'institutionId' => 'required|integer',
-            'name' => 'required|string',
-            'address' => 'optional|string',
+            'address' => 'nullable|string',
+            'numberOfFloors' => 'required|integer|min:1', // Agregado para validar el número de pisos
         ]);
 
-        $building = Building::create([
-            'institutionId' => $request->institutionId,
-            'name' => $request->name,
-            'address' => $request->address,
-        ]);
+        // Actualiza el edificio usando los datos validados
+        $building->update($validatedData);
 
-        return response()->json($building);
+        // Redirige con un mensaje de éxito
+        return redirect()->route('building.view', $building->id)->with('success', 'Edificio actualizado exitosamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -85,7 +89,7 @@ class BuildingController extends Controller
         $building = Building::findOrFail($id);
         $building->delete();
 
-        return response()->json(null, 204);
+        return redirect()->route('building.view', compact('building'))->with('success', 'Edificio actualizado exitosamente.');
     }
 
     public function showBuildingForm()

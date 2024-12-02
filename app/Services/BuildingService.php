@@ -18,16 +18,19 @@ class BuildingService
         ]);
     }
 
-    public function updateBuildin(Space $space, array $data): Space
+    public function updateBuilding(Building $building, array $data): Building
     {
-        $space->update([
+        // Valida y actualiza los datos, incluyendo el número de pisos
+        $building->update([
             'institutionId' => $data['institutionId'],
             'name' => $data['name'],
-            'address' => $data['address'],
-            'numberOfFloors' => $data['numberOfFloors'],
+            'address' => $data['address'] ?? null, // Maneja si 'address' no está presente
+            'numberOfFloors' => $data['numberOfFloors'], // Agregado para incluir el número de pisos
         ]);
-        return $space;
+
+        return $building;
     }
+
 
     public function deleteBuilding(Building $building): void
     {

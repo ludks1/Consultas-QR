@@ -53,7 +53,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Edificios</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="{{ route('building') }}" class="nav-item nav-link">asignar</a>
-                            <a href="{{ route('building') }}" class="nav-item nav-link">ver</a>
+                            <a href="{{ route('building.view') }}" class="nav-item nav-link">ver</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

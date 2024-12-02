@@ -61,6 +61,13 @@ Route::get('/institutions_admin_view', [InstitutionController::class, 'index'])-
 Route::put('/update-institution/{id}', [InstitutionController::class, 'update'])->name('institution.update');
 Route::delete('/delete-institutions/{id}', [InstitutionController::class, 'destroy'])->name('institution.delete');
 
+// Rutas para edificios
+Route::get('/building_admin', [BuildingController::class, 'showBuildingForm'])->name('building');
+Route::post('/create-building', [BuildingController::class, 'store'])->name('building.store');
+Route::get('/building_admin_view', [BuildingController::class, 'index'])->name('building.view');
+Route::put('/update-building/{id}', [BuildingController::class, 'update'])->name('building.update');
+Route::delete('/delete-building/{id}', [BuildingController::class, 'destroy'])->name('building.delete');
+
 // Rutas de horarios
 Route::get('/schedule_admin', [ScheduleController::class, 'showScheduleForm'])->name('schedule');
 Route::post('/create-schedule', [ScheduleController::class, 'store'])->name('schedule.store');
@@ -83,7 +90,3 @@ Route::get('/students_admin', function () {
 // Rutas para espacios
 Route::get('/space_admin', [SpaceController::class, 'showSpaceForm'])->name('space');
 Route::post('/create-space', [SpaceController::class, 'store'])->name('space.store');
-
-// Rutas para edificios
-Route::get('/building_admin', [BuildingController::class, 'showBuildingForm'])->name('building');
-Route::post('/create-building', [BuildingController::class, 'store'])->name('building.store');
