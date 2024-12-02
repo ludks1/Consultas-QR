@@ -23,11 +23,11 @@ class Subject extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_subject');
+        return $this->belongsToMany(User::class);
     }
 
     public function spaces()
     {
-        return $this->belongsToMany(Space::class, 'space_subject');
+        return $this->belongsToMany(Space::class);
     }
 }

@@ -30,8 +30,15 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+// Rutas de asignaturas
 Route::get('/subject_admin', [SubjectController::class, 'showSubjectForm'])->name('subject');
 Route::post('/create-subject', [SubjectController::class, 'store'])->name('subject.store');
+
+
+Route::get('/subject_admin_view', [SubjectController::class, 'index'])->name('subject.view');
+Route::put('/subject-update/{code}', [SubjectController::class, 'update'])->name('subject.update');
+
+Route::delete('/delete-subject/{code}', [SubjectController::class, 'destroy'])->name('subject.delete');
 
 // Rutas de horarios
 Route::get('/schedule_admin', [ScheduleController::class, 'showScheduleForm'])->name('schedule');

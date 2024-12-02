@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Career;
 use App\Enums\UserType;
 use App\Models\Subject;
 use App\Models\User;
@@ -28,30 +29,30 @@ class SubjectService
         }
     }
 
-    public function updateSubject(User $user, Subject $subject, array $data): Subject
+    public function updateSubject(Subject $subject, array $data): Subject
     {
-        if ($user['type'] !== UserType::ADMIN) {
-            throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para crear una materia.']);
+        try {
+            $subject->update([
+                'name' => $data['name'],
+                'code' => $data['code'],
+                'description' => $data['description'],
+                'career' => $data['career'],
+                'semester' => $data['semester'],
+            ]);
+
+            return $subject;
+        } catch (\Exception $e) {
+            // Manejo de errores, puedes lanzar una excepción personalizada si lo necesitas.
+            throw new \RuntimeException('Error al actualizar la materia: ' . $e->getMessage());
         }
-        $subject->update([
-            'name' => $data['name'],
-            'code' => $data['code'],
-            'description' => $data['description'],
-            'career' => $data['career'],
-            'semester' => $data['semester'],
-        ]);
-        return $subject;
     }
 
-    public function deleteSubject(User $user, Subject $subject): void
+    public function deleteSubject(Subject $subject): void
     {
-        if ($user['type'] !== UserType::ADMIN) {
-            throw ValidationException::withMessages(['type' => 'No cuentas con los permisos para eliminar una materia.']);
-        }
         $subject->delete();
     }
 
-    public function getSubjects(Subject $subject): Collection
+    public function getSubjects(): Collection
     {
         return Subject::all();
     }

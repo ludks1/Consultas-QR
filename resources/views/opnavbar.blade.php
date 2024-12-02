@@ -21,13 +21,55 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav font-weight-bold mx-auto py-0">
-                    <a href="{{ route('teacher') }}" class="nav-item nav-link">Maestros</a>
-                    <a href="{{ route('student') }}" class="nav-item nav-link">Alumnos</a>
-                    <a href="{{ route('schedule') }}" class="nav-item nav-link">Horarios</a>
-                    <a href="{{ route('space') }}" class="nav-item nav-link">Salones</a>
-                    <a href="{{ route('building') }}" class="nav-item nav-link">Edificios</a>
-                    <a href="{{ route('institution') }}" class="nav-item nav-link">Instituciones</a>
-                    <a href="{{ route('subject') }}" class="nav-item nav-link">Materias</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Maestros</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('teacher') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('teacher') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Alumnos</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('student') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('student') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Horarios</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('schedule') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('schedule') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Salones</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('space') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('space') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Edificios</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('building') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('building') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Instituciones</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('institution') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('institution') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Materia</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ route('subject') }}" class="nav-item nav-link">asignar</a>
+                            <a href="{{ route('subject.view') }}" class="nav-item nav-link">ver</a>
+                        </div>
+                    </div>
                     <a href="{{ route('search') }}" class="nav-item nav-link">Buscar</a>
                 </div>
                 @if (auth()->check())

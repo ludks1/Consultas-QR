@@ -31,7 +31,7 @@ class Space extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'space_subject');
+        return $this->belongsToMany(Subject::class);
     }
 
     public function events()
@@ -40,5 +40,10 @@ class Space extends Model
             return $this->hasMany(Event::class);
         }
         return null;
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

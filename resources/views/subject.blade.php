@@ -78,7 +78,7 @@
             </div>
 
             <div class="form-group">
-                <label for="career">Carera</label>
+                <label for="career">Carrera</label>
                 <select class="form-control" id="career" name="career" required>
                     <option value="">Seleccione una Carrera</option>
                     @foreach ($careers as $career)
@@ -86,11 +86,11 @@
                     @endforeach
                 </select>
             </div>
+
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
         </form>
-
     </div>
 
     @include('footer')
