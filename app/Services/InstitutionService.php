@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-use App\Enums\Career;
-use App\Enums\UserType;
 use App\Models\Institution;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
 
@@ -25,19 +22,27 @@ class InstitutionService
 
     public function updateInstitutions(Institution $institution, array $data): Institution
     {
-        $institution->update([
-            'name' => $data['name'],
-            'address' => $data['address'],
-            'logo' => $data['logo'],
-            'phone' => $data['phone'],
-            'email' => $data['email'],
-        ]);
-        return $institution;
+        try {
+            $institution->update([
+                'name' => $data['name'],
+                'address' => $data['address'],
+                'logo' => $data['logo'] ?? $institution->logo, // Mantener el logo actual si no se envió uno nuevo
+                'phone' => $data['phone'] ?? $institution->phone,
+                'email' => $data['email'] ?? $institution->email,
+            ]);
+            return $institution;
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Error al actualizar la institución: ' . $e->getMessage());
+        }
     }
 
     public function deleteInstitution(Institution $institution): void
     {
-        $institution->delete();
+        try {
+            $institution->delete();
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Error al eliminar la institución: ' . $e->getMessage());
+        }
     }
 
     public function getInstitutions(): Collection

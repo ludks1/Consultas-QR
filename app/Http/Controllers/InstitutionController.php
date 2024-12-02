@@ -21,7 +21,7 @@ class InstitutionController extends Controller
     public function index()
     {
         $institutions = Institution::all();
-        return response()->json($institutions);
+        return view('institutionview', compact('institutions'));
     }
 
     /**
@@ -39,7 +39,7 @@ class InstitutionController extends Controller
 
         $data = $request->all();
 
-            $this->institutionService->createInstitution($data);
+        $this->institutionService->createInstitution($data);
 
         return redirect()->route('institution');
     }
@@ -58,21 +58,32 @@ class InstitutionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $institution = Institution::findOrFail($id);
+        $institution = Institution::where('id', $id)->firstOrFail();
 
+        // Validar entrada
         $request->validate([
             'name' => 'required|string|unique:institutions,name,' . $institution->id,
             'address' => 'required|string',
-            'logo' => 'required|string',
+            'logo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Logo opcional y validación del archivo
+            'phone' => 'nullable|string',
+            'email' => 'nullable|email',
         ]);
 
-        $institution->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'logo' => $request->logo,
-        ]);
+        // Preparar datos
+        $data = $request->only(['name', 'address', 'phone', 'email']);
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('logos', 'public');
+        }
 
-        return response()->json($institution);
+        try {
+            // Actualizar institución mediante el servicio
+            $this->institutionService->updateInstitutions($institution, $data);
+
+            return redirect()->route('institution.view')
+                ->with('success', 'Institución actualizada exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al actualizar la institución: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -80,10 +91,15 @@ class InstitutionController extends Controller
      */
     public function destroy(string $id)
     {
-        $institution = Institution::findOrFail($id);
-        $institution->delete();
+        $institution = Institution::where('id', $id)->firstOrFail();
 
-        return response()->json(null, 204);
+        try {
+            $this->institutionService->deleteInstitution($institution);
+            return redirect()->route('institution.view')
+                ->with('success', 'Institución eliminada exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar la institución: ' . $e->getMessage()]);
+        }
     }
 
     public function showInstitutionForm()

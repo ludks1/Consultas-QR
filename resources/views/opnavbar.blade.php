@@ -60,7 +60,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Instituciones</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="{{ route('institution') }}" class="nav-item nav-link">asignar</a>
-                            <a href="{{ route('institution') }}" class="nav-item nav-link">ver</a>
+                            <a href="{{ route('institution.view') }}" class="nav-item nav-link">ver</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

@@ -32,11 +32,11 @@
 
     <div class="container-fluid bg-primary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-            <h3 class="display-3 font-weight-bold text-white">Ver Materias </h3>
+            <h3 class="display-3 font-weight-bold text-white">Ver Instituciones </h3>
             <div class="d-inline-flex text-white">
                 <a href="{{ route('index') }}" class="text-white">Inicio</a>
                 <i class="fas fa-chevron-right px-3"></i>
-                <p class="text-white">Materias</p>
+                <p class="text-white">Instituciones</p>
             </div>
         </div>
     </div>
@@ -45,72 +45,58 @@
         <div class="container">
             <div class="row">
                 <!-- Bucle para mostrar las tarjetas -->
-                @foreach ($subjects as $subject)
+                @foreach ($institutions as $institution)
                     <div class="col-lg-4 mb-5">
                         <div class="card border-0 bg-light shadow-sm pb-2">
                             <div class="card-body text-center">
-                                <h4 class="card-title">{{ $subject->name }}</h4>
+                                <h4 class="card-title">{{ $institution->name }}</h4>
                             </div>
                             <div class="card-footer bg-transparent py-4 px-5">
-                                <form action="{{ route('subject.update', ['code' => $subject->code]) }}" method="POST">
+                                <form action="{{ route('institution.update', ['id' => $institution->id]) }}"
+                                    method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="row border-bottom">
                                         <div class="col-6 py-1 text-right border-right"><strong>Nombre</strong></div>
                                         <div class="col-6 py-1">
                                             <input type="text" name="name"class="form-control" required
-                                                value="{{ $subject->name }}" />
+                                                value="{{ $institution->name }}" />
                                         </div>
                                     </div>
                                     <div class="row border-bottom">
-                                        <div class="col-6 py-1 text-right border-right">
-                                            <strong>codigo</strong>
-                                        </div>
+                                        <div class="col-6 py-1 text-right border-right"><strong>Direccion</strong></div>
                                         <div class="col-6 py-1">
-                                            <input type="number" name="code"class="form-control"
-                                                value="{{ $subject->code }}" required />
+                                            <input type="text" name="address"class="form-control" required
+                                                value="{{ $institution->address }}" />
                                         </div>
                                     </div>
                                     <div class="row border-bottom">
-                                        <div class="col-6 py-1 text-right border-right"><strong>Descripcion</strong>
-                                        </div>
+                                        <div class="col-6 py-1 text-right border-right"><strong>Telefono</strong></div>
                                         <div class="col-6 py-1">
-                                            <input type="text" name="description"class="form-control"
-                                                value="{{ $subject->description }}" required />
+                                            <input type="numer" name="phone"class="form-control" required
+                                                value="{{ $institution->phone }}" />
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="semester">Semestre: {{ $subject->semester }}</label>
-                                        <select class="form-control" id="semester" name="semester" required>
-                                            <option value="">Seleccione un Semestre</option>
-                                            <option value="1">Primer</option>
-                                            <option value="2">Segundo</option>
-                                            <option value="3">Tercer</option>
-                                            <option value="4">Cuarto</option>
-                                            <option value="5">Quinto</option>
-                                            <option value="6">Sexto</option>
-                                            <option value="7">Septimo</option>
-                                            <option value="8">Octavo</option>
-                                            <option value="9">Noveno</option>
-                                            <option value="10">Decimo</option>
-                                        </select>
+                                    <div class="row border-bottom">
+                                        <div class="col-6 py-1 text-right border-right"><strong>Email</strong></div>
+                                        <div class="col-6 py-1">
+                                            <input type="email" name="email"class="form-control" required
+                                                value="{{ $institution->email }}" />
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="career">Carrera:
-                                            {{ $subject->career }}</label>
-                                        <select class="form-control" id="career" name="career" required>
-                                            <option value="">Seleccione una Carrera</option>
-                                            @foreach ($careers as $career)
-                                                <option value="{{ $career }}">{{ $career }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="row border-bottom">
+                                        <div class="col-6 py-1 text-right border-right"><strong>Logo</strong></div>
+                                        <div class="col-6 py-1">
+                                            <img src="{{ asset('storage/' . $institution->logo) }}" alt="Logo actual"
+                                                class="img-fluid mb-2">
+                                            <input type="file" name="logo" />
+                                        </div>
                                     </div>
                                     <!-- Botón de actualización -->
                                     <button type="submit" class="btn btn-warning mt-3">Actualizar</button>
                                 </form>
-
-                                <form action="{{ route('subject.delete', ['code' => $subject->code]) }}" method="POST"
-                                    class="mt-2">
+                                <form action="{{ route('institution.delete', ['id' => $institution->id]) }}"
+                                    method="POST" class="mt-2">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -127,7 +113,7 @@
 
     @include('footer')
     <!-- Back to Top -->
-    <a href="{{ route('subject.view') }}" class="btn btn-primary p-3 back-to-top"><i
+    <a href="{{ route('institution.view') }}" class="btn btn-primary p-3 back-to-top"><i
             class="fa fa-angle-double-up"></i></a>
 
 
