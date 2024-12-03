@@ -46,7 +46,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Salones</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="{{ route('space') }}" class="nav-item nav-link">asignar</a>
-                            <a href="{{ route('space') }}" class="nav-item nav-link">ver</a>
+                            <a href="{{ route('space.view') }}" class="nav-item nav-link">ver</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

@@ -36,6 +36,7 @@ Route::get('/get-spaces/{spaceId}', [ScheduleController::class, 'getSpaces']);
 // Rutas para obtener edificios y pisos con AJAX
 Route::get('/get-buildings/{institutionId}', [SpaceController::class, 'getBuildings']);
 Route::get('/get-floors/{buildingId}', [SpaceController::class, 'getFloors']);
+Route::get('/get-spaces/{buildingId}', [SpaceController::class, 'getSpaces']);
 
 // Vistas predetermiandas
 Route::get('/', function () {
@@ -68,9 +69,18 @@ Route::get('/building_admin_view', [BuildingController::class, 'index'])->name('
 Route::put('/update-building/{id}', [BuildingController::class, 'update'])->name('building.update');
 Route::delete('/delete-building/{id}', [BuildingController::class, 'destroy'])->name('building.delete');
 
+// Rutas para espacios
+Route::get('/space_admin', [SpaceController::class, 'showSpaceForm'])->name('space');
+Route::post('/create-space', [SpaceController::class, 'store'])->name('space.store');
+Route::get('/space_admin_view', [SpaceController::class, 'index'])->name('space.view');
+Route::put('/update-space/{id}', [SpaceController::class, 'update'])->name('space.update');
+Route::delete('/delete-space/{id}', [SpaceController::class, 'destroy'])->name('space.delete');
+
 // Rutas de horarios
 Route::get('/schedule_admin', [ScheduleController::class, 'showScheduleForm'])->name('schedule');
 Route::post('/create-schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+
+
 
 // Rutas de búsqueda
 Route::get('/search', function () {
@@ -86,7 +96,3 @@ Route::get('/teachers_admin', function () {
 Route::get('/students_admin', function () {
     return view('student');
 })->name('student');
-
-// Rutas para espacios
-Route::get('/space_admin', [SpaceController::class, 'showSpaceForm'])->name('space');
-Route::post('/create-space', [SpaceController::class, 'store'])->name('space.store');

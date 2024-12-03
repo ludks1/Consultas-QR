@@ -32,11 +32,11 @@
 
     <div class="container-fluid bg-primary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-            <h3 class="display-3 font-weight-bold text-white">Ver Instituciones </h3>
+            <h3 class="display-3 font-weight-bold text-white">Ver Edificios </h3>
             <div class="d-inline-flex text-white">
                 <a href="{{ route('index') }}" class="text-white">Inicio</a>
                 <i class="fas fa-chevron-right px-3"></i>
-                <p class="text-white">Instituciones</p>
+                <p class="text-white">Edificios</p>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
 
     @include('footer')
     <!-- Back to Top -->
-    <a href="{{ route('institution.view') }}" class="btn btn-primary p-3 back-to-top"><i
+    <a href="{{ route('building.view') }}" class="btn btn-primary p-3 back-to-top"><i
             class="fa fa-angle-double-up"></i></a>
 
 
