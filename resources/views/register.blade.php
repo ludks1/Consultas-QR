@@ -47,16 +47,16 @@
                         placeholder="Ingrese su numero de cuenta" required>
                 </div>
                 <div class="form-group">
-                    <label for="user_type">Tipo de Usuario</label>
-                    <select name="user_type" id="user_type" class="form-control">
+                    <label for="type">Tipo de Usuario</label>
+                    <select name="type" id="ype" class="form-control">
                         @foreach ($userTypes as $type)
                             <option value="{{ $type }}">{{ $type }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="user_career">Carrera</label>
-                    <select name="user_career" id="user_career" class="form-control">
+                    <label for="career">Carrera</label>
+                    <select name="career" id="career" class="form-control">
                         @foreach ($userCareers as $career)
                             <option value="{{ $career }}">{{ $career }}</option>
                         @endforeach

@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Rutas de registro
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [UserController::class, 'store'])->name('users.store');
+Route::post('/register-user', [UserController::class, 'store'])->name('users.store');
 
 // Rutas de login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -79,7 +79,8 @@ Route::delete('/delete-space/{id}', [SpaceController::class, 'destroy'])->name('
 // Rutas de horarios
 Route::get('/schedule_admin', [ScheduleController::class, 'showScheduleForm'])->name('schedule');
 Route::post('/create-schedule', [ScheduleController::class, 'store'])->name('schedule.store');
-
+Route::get('/schedule_admin_view', [ScheduleController::class, 'index'])->name('schedule.view');
+Route::delete('/delete-schedule/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
 
 
 // Rutas de búsqueda

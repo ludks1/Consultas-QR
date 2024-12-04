@@ -62,8 +62,13 @@
             </div>
 
             <div class="form-group">
-                <label for="day">Fecha</label>
-                <input type="date" class="form-control" name="day" id="day" value="{{ request('day') }}">
+                <label for="institutionSelect">Seleccionar Dia</label>
+                <select class="form-control" id="day" name="day" required>
+                    <option value="">Seleccione un dia</option>
+                    @foreach ($days as $day)
+                        <option value="{{ $day }}">{{ $day }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="institutionSelect">Seleccionar Institución</label>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Career;
+use App\Enums\Days;
 use App\Models\Building;
 use App\Models\Institution;
 use App\Models\Schedule;
 use App\Models\Space;
 use App\Models\Subject;
 use App\Services\ScheduleService;
+use Endroid\QrCode\QrCode;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -50,8 +52,11 @@ class ScheduleController extends Controller
 
         // Obtener los horarios filtrados
         $schedules = $query->get();
+        $institutions = Institution::all();
+        $buildings = Building::all();
+        $spaces = Space::all();
 
-        return view('schedule', compact('schedules'));
+        return view('scheduleview', compact('schedules', 'institutions', 'buildings', 'spaces'));
     }
 
     /**
@@ -63,10 +68,13 @@ class ScheduleController extends Controller
         $validated = $request->validate([
             'startIime' => 'required|date_format:H:i',
             'endIime' => 'required|date_format:H:i|after:startIime',
-            'day' => 'required|date',
+            'day' => 'required|string',
             'subjectId' => 'required|string|max:255',
             'spaceId' => 'required|exists:spaces,id',
         ]);
+
+        $data = $request->all();
+        $data['day'] = $data['day'];  // Mapeamos 'day' a 'day'
 
         // Llamar al servicio para registrar el horario
         try {
@@ -125,14 +133,20 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $schedule = Schedule::findOrFail($id);
-        $schedule->delete();
+        try {
+            // Obtener el horario por su ID
+            $schedule = Schedule::findOrFail($id);
 
-        return response()->json(null, 204);
+            // Llamar al servicio para eliminar el horario
+            $this->scheduleService->deleteSchedule($request->user(), $schedule);
+
+            return redirect()->route('schedule.view')->with('success', 'Horario eliminado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('schedule.view')->with('error', 'Error al eliminar el horario: ' . $e->getMessage());
+        }
     }
-
 
     // se necesita mandar la materia para crear el horario en la bdd
     public function showScheduleForm(Request $request)
@@ -141,6 +155,8 @@ class ScheduleController extends Controller
         $buildings = [];
         $spaces = [];
         $subjects = Subject::all();
+        $days = Days::getOptions();
+
         if ($request->has('institutionId')) {
             $buildings = Building::where('institutionId', $request->institutionId)->get();
         }
@@ -153,7 +169,7 @@ class ScheduleController extends Controller
         if ($request->has('subjectId')) {
             $subjects = Subject::where('code', $request->code)->get();
         }
-        return view('schedule', compact('institutions', 'buildings', 'spaces', 'subjects'));
+        return view('schedule', compact('institutions', 'buildings', 'spaces', 'subjects', 'days'));
     }
 
     public function getBuildings($institutionId)

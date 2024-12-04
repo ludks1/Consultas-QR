@@ -34,14 +34,12 @@ class UserController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'user_type' => 'required|string',
+            'type' => 'required|string',
             'accountId' => 'required|string|unique:users,accountId',
-            'user_career' => 'required|string',
+            'career' => 'required|string',
         ]);
 
         $data = $request->all();
-        $data['type'] = $data['user_type'];  // Mapeamos 'user_type' a 'type'
-        $data['career'] = $data['user_career'];  // Mapeamos 'user_career' a 'career'
 
         // Llamar al servicio para crear el usuario
         $this->userService->createUser($data);
